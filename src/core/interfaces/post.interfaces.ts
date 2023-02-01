@@ -1,6 +1,5 @@
 export interface IPostAuthor {
-    firstname: string;
-    lastname: string;
+    fullname: string;
     linkToProfile: string;
     photo: string;
 }

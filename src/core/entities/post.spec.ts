@@ -6,8 +6,7 @@ const postData: IPostData = {
     likes: [],
     comments: [],
     author: {
-        firstname: "fawad",
-        lastname: "khan",
+        fullname: "Fawad khan",
         photo: "my-photo.png",
         linkToProfile: "http://www.social-media.com/myprofile",
     },

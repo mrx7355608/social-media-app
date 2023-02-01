@@ -7,59 +7,42 @@ export class AuthorFactory {
         this.sanitize = sanitize;
     }
 
-    validateName(name: string, label: string) {
-        if (!name) {
-            throw new Error(`${label} name is missing`);
+    create(authorData: IPostAuthor): IPostAuthor {
+        const { fullname, photo, linkToProfile } = authorData;
+        if (!fullname) {
+            throw new Error("Author name is missing");
         }
-        if (typeof name !== "string") {
-            throw new Error(`Invalid ${label} name`);
+        if (typeof fullname !== "string") {
+            throw new Error("Invalid author name");
         }
-        if (this.sanitize(name).length < 4) {
+        if (this.sanitize(fullname).length < 10) {
             throw new Error(
-                `${label} name should be 4 characters long at least`
+                "Author name should be 10 characters long at least"
             );
         }
-    }
-
-    private validatePhoto(photo: string) {
         if (!photo) {
             throw new Error("Author photo is missing");
         }
-    }
-
-    private validateLinkToProfile(link: string) {
-        if (!link) {
+        if (!linkToProfile) {
             throw new Error("Author profile link is missing");
         }
-    }
 
-    create(authorData: IPostAuthor): IPostAuthor {
-        const { firstname, lastname, photo, linkToProfile } = authorData;
-        this.validateName(firstname, "First");
-        this.validateName(lastname, "Last");
-        this.validatePhoto(photo);
-        this.validateLinkToProfile(linkToProfile);
-
-        const validFirstName = this.sanitize(firstname);
-        const validLastName = this.sanitize(lastname);
+        const validFullName = this.sanitize(fullname);
 
         return new Author({
-            firstname: validFirstName,
-            lastname: validLastName,
+            fullname: validFullName,
             photo,
             linkToProfile,
         });
     }
 }
 class Author {
-    firstname: string;
-    lastname: string;
+    fullname: string;
     linkToProfile: string;
     photo: string;
 
-    constructor({ firstname, lastname, linkToProfile, photo }: IPostAuthor) {
-        this.firstname = firstname;
-        this.lastname = lastname;
+    constructor({ fullname, linkToProfile, photo }: IPostAuthor) {
+        this.fullname = fullname;
         this.photo = photo;
         this.linkToProfile = linkToProfile;
     }
