@@ -1,4 +1,4 @@
-import { IPostAuthor } from "../interfaces/post.interfaces";
+import { IAuthor } from "../interfaces/author.interfaces";
 
 export class AuthorFactory {
     private sanitize: (str: string) => string;
@@ -7,7 +7,7 @@ export class AuthorFactory {
         this.sanitize = sanitize;
     }
 
-    create(authorData: IPostAuthor): IPostAuthor {
+    create(authorData: IAuthor): IAuthor {
         const { fullname, photo, linkToProfile } = authorData;
         if (!fullname) {
             throw new Error("Author name is missing");
@@ -41,7 +41,7 @@ class Author {
     linkToProfile: string;
     photo: string;
 
-    constructor({ fullname, linkToProfile, photo }: IPostAuthor) {
+    constructor({ fullname, linkToProfile, photo }: IAuthor) {
         this.fullname = fullname;
         this.photo = photo;
         this.linkToProfile = linkToProfile;

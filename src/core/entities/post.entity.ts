@@ -1,14 +1,14 @@
 // TODO: add author entity
 import {
     IPostData,
-    IPostAuthor,
     IPostEntity,
     IPostHelperFunctions,
 } from "../interfaces/post.interfaces";
+import { IAuthor } from "../interfaces/author.interfaces";
 
 export class PostFactory {
     private sanitize: (str: string) => string;
-    private createAuthor: (authorData: IPostAuthor) => IPostAuthor;
+    private createAuthor: (authorData: IAuthor) => IAuthor;
 
     constructor({ sanitize, createAuthor }: IPostHelperFunctions) {
         this.sanitize = sanitize;
@@ -51,7 +51,7 @@ class Post implements IPostEntity {
     text: string;
     likes: string[];
     comments: string[];
-    author: IPostAuthor;
+    author: IAuthor;
 
     constructor({ text, likes, comments, author }: IPostData) {
         this.text = text;

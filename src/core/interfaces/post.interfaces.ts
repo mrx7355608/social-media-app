@@ -1,8 +1,4 @@
-export interface IPostAuthor {
-    fullname: string;
-    linkToProfile: string;
-    photo: string;
-}
+import { IAuthor } from "./author.interfaces";
 
 export interface IPostEntity extends IPostData {
     markDeleted(): void;
@@ -12,7 +8,7 @@ export interface IPostEntity extends IPostData {
 }
 
 export interface IPostData {
-    author: IPostAuthor;
+    author: IAuthor;
     likes: string[];
     comments: string[];
     text: string;
@@ -20,5 +16,5 @@ export interface IPostData {
 
 export interface IPostHelperFunctions {
     sanitize: (str: string) => string;
-    createAuthor: (authorData: IPostAuthor) => IPostAuthor;
+    createAuthor: (authorData: IAuthor) => IAuthor;
 }
