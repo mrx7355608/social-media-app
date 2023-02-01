@@ -7,8 +7,7 @@ export interface IPostAuthor {
 
 export interface IPostEntity extends IPostData {
     markDeleted(): void;
-    addLike(userid: string): void;
-    removeLike(userid: string): void;
+    toggleLike(userid: string): void;
     addComment(commentid: string): void;
     removeComment(commentid: string): void;
 }

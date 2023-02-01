@@ -32,6 +32,9 @@ export class PostFactory {
         if (!comments) {
             throw new Error("Comments are missing");
         }
+        if (!author) {
+            throw new Error("Author data is missing");
+        }
 
         const validText = this.sanitize(text);
         const validAuthor = this.createAuthor(author);
@@ -58,12 +61,12 @@ class Post implements IPostEntity {
         this.author = author;
     }
 
-    public addLike(userid: string): void {
+    public toggleLike(userid: string): void {
+        if (this.likes.includes(userid)) {
+            this.likes = this.likes.filter((id) => id !== userid);
+            return;
+        }
         this.likes.push(userid);
-    }
-
-    public removeLike(userid: string): void {
-        this.likes = this.likes.filter((id) => id !== userid);
     }
 
     public addComment(commentid: string): void {
