@@ -1,17 +1,16 @@
+// TODO: add author entity
 import {
     IPostData,
     IPostAuthor,
     IPostEntity,
+    IPostHelperFunctions,
 } from "../interfaces/post.interfaces";
 
 export class PostFactory {
     private sanitize: (str: string) => string;
     private createAuthor: (authorData: IPostAuthor) => IPostAuthor;
 
-    constructor(
-        sanitize: (str: string) => string,
-        createAuthor: (authorData: IPostAuthor) => IPostAuthor
-    ) {
+    constructor({ sanitize, createAuthor }: IPostHelperFunctions) {
         this.sanitize = sanitize;
         this.createAuthor = createAuthor;
     }

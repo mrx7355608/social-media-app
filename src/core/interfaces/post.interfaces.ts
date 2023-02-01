@@ -18,3 +18,8 @@ export interface IPostData {
     comments: string[];
     text: string;
 }
+
+export interface IPostHelperFunctions {
+    sanitize: (str: string) => string;
+    createAuthor: (authorData: IPostAuthor) => IPostAuthor;
+}
