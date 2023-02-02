@@ -1,0 +1,11 @@
+describe("User entity", function () {
+    it("throws error when name contains special characters", function () {})
+    it("throws error when name is not given or is null", function () {})
+    it("throws error when email is invalid", function () {})
+    it("throws error when password is short", function () {})
+    it("throws error when passwords do not match", function () {})
+    it("hashes password", function () {})
+    it("add friends to friendlist", function () {})
+    it("remove friends from friendlist", function () {})
+    it("block users", function () {})
+})
