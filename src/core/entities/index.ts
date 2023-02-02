@@ -1,5 +1,5 @@
-import { AuthorFactory } from "./author.entity";
-import { PostFactory } from "./post.entity";
+import { AuthorFactory } from "./posts/author.entity";
+import { PostFactory } from "./posts/post.entity";
 import sanitize from "sanitize-html";
 
 const authorFactory = new AuthorFactory(sanitize);

@@ -3,8 +3,8 @@ import {
     IPostData,
     IPostEntity,
     IPostHelperFunctions,
-} from "../interfaces/post.interfaces";
-import { IAuthor } from "../interfaces/author.interfaces";
+} from "../../interfaces/post.interfaces";
+import { IAuthor } from "../../interfaces/author.interfaces";
 
 export class PostFactory {
     private sanitize: (str: string) => string;

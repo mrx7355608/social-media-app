@@ -1,4 +1,4 @@
-import { IAuthor } from "../interfaces/author.interfaces";
+import { IAuthor } from "../../interfaces/author.interfaces";
 
 export class AuthorFactory {
     private sanitize: (str: string) => string;

@@ -1,5 +1,5 @@
-import { IPostData } from "../interfaces/post.interfaces";
-import { postFactory } from "./index";
+import { IPostData } from "../../interfaces/post.interfaces";
+import { postFactory } from "../index";
 
 const postData: IPostData = {
     text: "Hello boisessss what are you doingggg.",

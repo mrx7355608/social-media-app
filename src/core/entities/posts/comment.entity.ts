@@ -1,5 +1,5 @@
-import { IComment } from "../interfaces/comment.interfaces";
-import { IAuthor } from "../interfaces/author.interfaces";
+import { IComment } from "../../interfaces/comment.interfaces";
+import { IAuthor } from "../../interfaces/author.interfaces";
 
 export class CommentFactory {
     private sanitize: (str: string) => string;
