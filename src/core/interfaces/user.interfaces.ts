@@ -12,7 +12,6 @@ export interface IUserEntity extends IUser {
     acceptRequest(userid: string): void;
     rejectRequest(userid: string): void;
     removeFriend(friendId: string): void;
-    addFriend(friendId: string): void;
 }
 
 export interface IUserPendingRequest {

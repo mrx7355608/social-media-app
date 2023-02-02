@@ -125,28 +125,29 @@ class User implements IUserEntity {
         email,
         password,
         confirmPassword,
+        friends,
+        pendingRequests,
     }: IUser) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
         this.confirmPassword = confirmPassword;
-        this.friends = [];
-        this.pendingRequests = [];
+        this.friends = friends;
+        this.pendingRequests = pendingRequests;
     }
 
     acceptRequest(userid: string): void {
         this.friends.push(userid);
+        this.pendingRequests = this.pendingRequests.filter(
+            (reqs) => reqs.friendId !== userid
+        );
     }
 
     rejectRequest(userid: string): void {
         this.pendingRequests = this.pendingRequests.filter(
             (request) => request.friendId !== userid
         );
-    }
-
-    addFriend(friendId: string): void {
-        this.friends.push(friendId);
     }
 
     removeFriend(friendId: string): void {
