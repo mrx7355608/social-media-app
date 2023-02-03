@@ -22,7 +22,7 @@ export class UserFactory {
 
     create(userData: IUser): IUserEntity {
         this.validateName(userData.firstname, "First");
-        this.validateName(userData.firstname, "Last");
+        this.validateName(userData.lastname, "Last");
         this.validateEmail(userData.email);
         this.validatePasswords(userData.password, userData.confirmPassword);
         this.validateFriends(userData.friends);

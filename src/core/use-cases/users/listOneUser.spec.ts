@@ -1,36 +1,9 @@
 import { listOneUserFactory } from "./listOneUser";
 import validator from "validator";
-import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
-import { IUser } from "@/core/interfaces/user.interfaces";
 import { ErrorServices } from "@/services/error.services";
+import { userDB } from "@/mocks/userDataSource";
 
 const errorServices = new ErrorServices();
-const userDB: IDataSource<IUser> = {
-    async findAll(): Promise<IUser[]> {
-        return [] as IUser[];
-    },
-
-    async findById(): Promise<IUser> {
-        return {} as IUser;
-    },
-
-    async findOne(): Promise<IUser> {
-        return {} as IUser;
-    },
-
-    async insert(): Promise<IUser> {
-        return {} as IUser;
-    },
-
-    async update(id, data): Promise<IUser> {
-        return {} as IUser;
-    },
-
-    async deleteData(id): Promise<IUser> {
-        return {} as IUser;
-    },
-};
-
 const listOneUser = listOneUserFactory({
     userDataSource: userDB,
     validId: validator.isMongoId,

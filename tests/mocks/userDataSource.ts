@@ -19,6 +19,8 @@ export const userDB: IDataSource<IUser> = {
     },
 
     async insert(userData: IUser): Promise<IUser> {
+        // TODO: in actual implementation of user data source
+        // make sure to remove the confirmPassword field from userData
         const newUser = {
             _id: Date.now(),
             createdAt: new Date(Date.now()),
