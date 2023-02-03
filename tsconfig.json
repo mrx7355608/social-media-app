@@ -3,14 +3,15 @@
         "target": "ES5",
         "types": ["node", "jest"],
         "module": "commonjs",
-        "baseUrl": "./src",
+        "baseUrl": "./",
         "paths": {
-            "@/core/*": ["core/*"],
-            "@/adapters/*": ["adapters/*"],
-            "@/frameworks/*": ["frameworks/*"],
-            "@/utils/*": ["utils/*"],
-            "@/services/*": ["services/*"],
-            "@/data/*": ["data/*"]
+            "@/core/*": ["src/core/*"],
+            "@/adapters/*": ["src/adapters/*"],
+            "@/frameworks/*": ["src/frameworks/*"],
+            "@/utils/*": ["src/utils/*"],
+            "@/services/*": ["src/services/*"],
+            "@/data/*": ["src/data/*"],
+            "@/mocks/*": ["tests/mocks/*"]
         },
         "outDir": "build",
         "esModuleInterop": true,

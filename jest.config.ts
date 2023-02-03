@@ -10,6 +10,7 @@ const config: Config.InitialOptions = {
         "@/data/(.*)": "<rootDir>/src/data/$1",
         "@/utils/(.*)": "<rootDir>/src/utils/$1",
         "@/services/(.*)": "<rootDir>/src/services/$1",
+        "@/mocks/(.*)": "<rootDir>/tests/mocks/$1",
     },
 };
 
