@@ -8,9 +8,10 @@ const userFactory = new UserFactory({
     emailValidator: validator.isEmail,
 });
 
+export { userFactory };
+
+/* HELPER FUNCTIONS FOR ENTITY FACTORIES*/
 function detectSpecialChars(str: string): boolean {
     const regex = /[^A-Za-z 0-9]/g;
     return regex.test(str);
 }
-
-export { userFactory };
