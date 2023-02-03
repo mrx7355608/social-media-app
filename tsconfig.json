@@ -8,6 +8,8 @@
             "@/core/*": ["core/*"],
             "@/adapters/*": ["adapters/*"],
             "@/frameworks/*": ["frameworks/*"],
+            "@/utils/*": ["utils/*"],
+            "@/services/*": ["services/*"],
             "@/data/*": ["data/*"]
         },
         "outDir": "build",
