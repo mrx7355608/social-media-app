@@ -1,11 +1,16 @@
-import { AuthorFactory } from "./posts/author.entity";
-import { PostFactory } from "./posts/post.entity";
+import { UserFactory } from "./users/user.entity";
 import sanitize from "sanitize-html";
+import validator from "validator";
 
-const authorFactory = new AuthorFactory(sanitize);
-const postFactory = new PostFactory({
+const userFactory = new UserFactory({
     sanitize,
-    createAuthor: authorFactory.create.bind(authorFactory),
+    detectSpecialChars,
+    emailValidator: validator.isEmail,
 });
 
-export { postFactory };
+function detectSpecialChars(str: string): boolean {
+    const regex = /[^A-Za-z 0-9]/g;
+    return regex.test(str);
+}
+
+export { userFactory };

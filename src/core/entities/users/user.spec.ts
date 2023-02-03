@@ -1,11 +1,5 @@
+import { userFactory } from "../index";
 import { IUser } from "@/core/interfaces/user.interfaces";
-import { UserFactory } from "./user.entity";
-
-const userFactory = new UserFactory({
-    sanitize,
-    emailValidator,
-    detectSpecialChars,
-});
 
 const data: IUser = {
     firstname: "Test",
@@ -37,10 +31,10 @@ describe("User entity", function () {
         );
     });
 
-    it.skip("throws error when email is invalid", function () {
+    it("throws error when email is invalid", function () {
         expect(() =>
             userFactory.create({ ...data, email: "^Test@email$.com@$./../" })
-        ).toThrow("First name should not have any special characters");
+        ).toThrow("Invalid email");
     });
 
     it("throws error when password is short", function () {
@@ -78,15 +72,3 @@ describe("User entity", function () {
         expect(newUser.friends).not.toContain("0958-3951-5931-2502");
     });
 });
-
-// Mock Helper functions for UserFactory
-function sanitize(str: string): string {
-    return str;
-}
-function emailValidator(email: string): boolean {
-    return true;
-}
-function detectSpecialChars(str: string): boolean {
-    const regex = /[^A-Za-z 0-9]/g;
-    return regex.test(str);
-}
