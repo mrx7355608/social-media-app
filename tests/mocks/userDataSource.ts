@@ -1,28 +1,43 @@
 import { IUser } from "@/core/interfaces/user.interfaces";
 import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
 
+let users: IUser[] = [];
+
 export const userDB: IDataSource<IUser> = {
     async findAll(): Promise<IUser[]> {
-        return [] as IUser[];
+        return users;
     },
 
-    async findById(): Promise<IUser> {
-        return {} as IUser;
+    async findById(id: string): Promise<IUser> {
+        const user = users.filter((u) => (u as any).id === id)[0];
+        return user;
     },
 
-    async findOne(): Promise<IUser> {
-        return {} as IUser;
+    async findOne(filter: { email: string }): Promise<IUser> {
+        const user = users.filter((user) => user.email === filter.email)[0];
+        return user;
     },
 
-    async insert(): Promise<IUser> {
-        return {} as IUser;
+    async insert(userData: IUser): Promise<IUser> {
+        const newUser = {
+            _id: Date.now(),
+            createdAt: new Date(Date.now()),
+            ...userData,
+        };
+
+        users.push(newUser);
+        return newUser;
     },
 
     async update(id, data): Promise<IUser> {
-        return {} as IUser;
+        const user = users.filter((user) => (user as any)._id === id)[0];
+        const updatedUser = Object.assign(user, data);
+        return updatedUser;
     },
 
     async deleteData(id): Promise<IUser> {
-        return {} as IUser;
+        const user = users.filter((user) => (user as any)._id === id)[0];
+        users = users.filter((user) => (user as any)._id === id);
+        return user;
     },
 };
