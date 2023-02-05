@@ -11,6 +11,7 @@
             "@/utils/*": ["src/utils/*"],
             "@/services/*": ["src/services/*"],
             "@/data/*": ["src/data/*"],
+            "@/config/*": ["config/*"],
             "@/mocks/*": ["tests/mocks/*"]
         },
         "outDir": "build",

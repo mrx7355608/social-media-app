@@ -44,6 +44,7 @@
     "@/frameworks/*": "build/src/frameworks/*",
     "@/data/*": "build/src/data/*",
     "@/services/*": "build/src/services/*",
+    "@/config/*": "build/config/*",
     "@/utils/*": "build/src/utils/*"
   }
 }
