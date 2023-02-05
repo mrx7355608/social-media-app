@@ -21,6 +21,7 @@ export const userDB: IDataSource<IUserDBModel> = {
     async insert<IUser>(userData: IUser): Promise<IUserDBModel> {
         const newUser = Object.assign(userData as any, {
             createdAt: Date.now(),
+            _id: Date.now().toString(),
         });
         users.push(newUser);
         return newUser;

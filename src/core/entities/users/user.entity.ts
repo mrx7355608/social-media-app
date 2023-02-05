@@ -154,16 +154,17 @@ class User implements IUserEntity {
         );
     }
 
-    addFriend(friendId: string): void {
-        this.pendingRequests.push({
-            fullname: "",
-            friendId,
-            profilePicture: "",
-            linkToProfile: "",
-        });
+    addRequest(newRequest: IUserPendingRequest): void {
+        this.pendingRequests.push(newRequest);
     }
 
     removeFriend(friendId: string): void {
         this.friends = this.friends.filter((id) => id !== friendId);
+    }
+
+    cancelRequest(friendId: string): void {
+        this.pendingRequests = this.pendingRequests.filter(
+            (reqs) => reqs.friendId !== friendId
+        );
     }
 }

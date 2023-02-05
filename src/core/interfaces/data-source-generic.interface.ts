@@ -10,6 +10,6 @@ export interface IDataSource<T> {
     findById(id: string): Promise<T | null>;
     findOne(filter: any): Promise<T | null>;
     insert<Y>(data: Y): Promise<T>;
-    update(id: string, data: T): Promise<T>;
+    update<Y>(id: string, data: Y): Promise<T>;
     deleteData(id: string): Promise<T>;
 }

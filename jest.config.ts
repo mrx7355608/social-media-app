@@ -11,6 +11,7 @@ const config: Config.InitialOptions = {
         "@/utils/(.*)": "<rootDir>/src/utils/$1",
         "@/services/(.*)": "<rootDir>/src/services/$1",
         "@/mocks/(.*)": "<rootDir>/tests/mocks/$1",
+        "@/config/(.*)": "<rootDir>/config/$1",
     },
 };
 

@@ -38,6 +38,8 @@ export function addUserFactory({
         const validUser = userFactory.create(newUserData);
         const hashedPassword = await hashServices.hash(validUser.password);
 
+        // *** TODO: send a verification email *** //
+
         return await userDataSource.insert<IUser>({
             firstname: validUser.firstname,
             lastname: validUser.lastname,

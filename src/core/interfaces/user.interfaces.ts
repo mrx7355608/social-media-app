@@ -17,8 +17,9 @@ export interface IUserDBModel extends IUser, mongoose.Document {
 export interface IUserEntity extends IUser {
     acceptRequest(userid: string): void;
     rejectRequest(userid: string): void;
-    addFriend(friendId: string): void;
+    addRequest(newRequest: IUserPendingRequest): void;
     removeFriend(friendId: string): void;
+    cancelRequest(friendId: string): void;
 }
 
 export interface IUserPendingRequest {

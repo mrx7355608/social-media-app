@@ -1,3 +1,4 @@
+// TODO: use .env file
 export default {
-    apiUrl: process.env.API_URL as string,
+    apiUrl: "http://localhost:8000/api/v1",
 };
