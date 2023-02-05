@@ -49,6 +49,12 @@ describe("User entity", function () {
         ).toThrow("Passwords do not match");
     });
 
+    it("throws error when confirm password is missing", function () {
+        expect(() =>
+            userFactory.create({ ...data, confirmPassword: undefined })
+        ).toThrow("Confirm your password to signup");
+    });
+
     it("accept friend requests", function () {
         const newUser = userFactory.create(data);
         newUser.acceptRequest("0958-3951-5931-2502");
@@ -71,4 +77,6 @@ describe("User entity", function () {
         expect(newUser.friends.length).toBe(2);
         expect(newUser.friends).not.toContain("0958-3951-5931-2502");
     });
+
+    it.todo("add friends in friendlist");
 });

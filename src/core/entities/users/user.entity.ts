@@ -24,19 +24,22 @@ export class UserFactory {
         this.validateName(userData.firstname, "First");
         this.validateName(userData.lastname, "Last");
         this.validateEmail(userData.email);
-        this.validatePasswords(userData.password, userData.confirmPassword);
+        this.validatePasswords(
+            userData.password,
+            userData.confirmPassword as string
+        );
         this.validateFriends(userData.friends);
         this.validatePendingRequest(userData.pendingRequests);
 
         const validFirstname = this.sanitize(userData.firstname);
         const validLastname = this.sanitize(userData.lastname);
 
+        // TODO: remove confirmPassword field
         return new User({
             firstname: validFirstname,
             lastname: validLastname,
             email: userData.email,
             password: userData.password,
-            confirmPassword: "",
             friends: userData.friends,
             pendingRequests: userData.pendingRequests,
         });
@@ -99,6 +102,8 @@ export class UserFactory {
         if (!friends) {
             throw new Error("User friends are missing");
         }
+        // TODO: add valdiation for array values
+        // they should be strings only
     }
 
     private validatePendingRequest(
@@ -107,6 +112,8 @@ export class UserFactory {
         if (!pendingRequests) {
             throw new Error("User's pending requests are missing");
         }
+        // TODO: add valdiation for array values
+        // they should be strings only
     }
 }
 
@@ -115,7 +122,6 @@ class User implements IUserEntity {
     lastname: string;
     email: string;
     password: string;
-    confirmPassword: string;
     friends: string[];
     pendingRequests: IUserPendingRequest[];
 
@@ -124,7 +130,6 @@ class User implements IUserEntity {
         lastname,
         email,
         password,
-        confirmPassword,
         friends,
         pendingRequests,
     }: IUser) {
@@ -132,7 +137,6 @@ class User implements IUserEntity {
         this.lastname = lastname;
         this.email = email;
         this.password = password;
-        this.confirmPassword = confirmPassword;
         this.friends = friends;
         this.pendingRequests = pendingRequests;
     }
@@ -148,6 +152,15 @@ class User implements IUserEntity {
         this.pendingRequests = this.pendingRequests.filter(
             (request) => request.friendId !== userid
         );
+    }
+
+    addFriend(friendId: string): void {
+        this.pendingRequests.push({
+            fullname: "",
+            friendId,
+            profilePicture: "",
+            linkToProfile: "",
+        });
     }
 
     removeFriend(friendId: string): void {
