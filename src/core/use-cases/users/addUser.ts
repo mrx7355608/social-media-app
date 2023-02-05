@@ -1,6 +1,10 @@
 import { userFactory } from "@/core/entities";
 import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
-import { IUser, IUserInputData } from "@/core/interfaces/user.interfaces";
+import {
+    IUser,
+    IUserDBModel,
+    IUserInputData,
+} from "@/core/interfaces/user.interfaces";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 import { IHashServices } from "@/services/interfaces/hashServices.interface";
 
@@ -9,7 +13,7 @@ export function addUserFactory({
     errorServices,
     hashServices,
 }: {
-    userDataSource: IDataSource<IUser>;
+    userDataSource: IDataSource<IUserDBModel>;
     errorServices: IErrorServices;
     hashServices: IHashServices;
 }) {
@@ -21,27 +25,24 @@ export function addUserFactory({
         const userExists = await userDataSource.findOne({
             email: userData.email,
         });
+
         if (userExists) {
             return errorServices.notFoundError("User already exists");
         }
 
-        const newUserData: IUser = {
-            ...userData,
+        const newUserData: IUser = Object.assign(userData, {
             friends: [],
             pendingRequests: [],
-        };
+        });
+
         const validUser = userFactory.create(newUserData);
         const hashedPassword = await hashServices.hash(validUser.password);
 
-        // TODO: in actual implementation of user data source
-        // make sure to remove the confirmPassword field from userData
-
-        return await userDataSource.insert({
+        return await userDataSource.insert<IUser>({
             firstname: validUser.firstname,
             lastname: validUser.lastname,
-            email: validUser.lastname,
+            email: validUser.email,
             password: hashedPassword,
-            confirmPassword: validUser.confirmPassword,
             friends: validUser.friends,
             pendingRequests: validUser.pendingRequests,
         });

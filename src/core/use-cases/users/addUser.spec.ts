@@ -23,9 +23,12 @@ const data: IUserInputData = {
 describe("Add User", function () {
     it("throws error on invalid data", async function () {
         try {
-            await addUser({ firstname: "test" } as any);
+            await addUser({
+                ...data,
+                email: "invali@gemial@gc.com../as124k",
+            } as any);
         } catch (err: any) {
-            expect(err.message).toBe("Last name is missing");
+            expect(err.message).toBe("Invalid email");
         }
     });
 
@@ -39,14 +42,22 @@ describe("Add User", function () {
     });
 
     it("creates a new user on valid data", async function () {
-        const user = await addUser({ ...data, email: "newuser@example.com" });
+        const user = await addUser({ ...data, email: "user@example.com" });
         expect(user.firstname).toBe(data.firstname);
-        expect(user.confirmPassword).not.toBe(data.confirmPassword);
+        expect(user.email).toBe("user@example.com");
+        expect(user.confirmPassword).toBeUndefined();
+    });
+
+    it("newly created user should not have a confirmPassword field", async function () {
+        const user = await addUser({ ...data, email: "user1@example.com" });
+        expect(user.confirmPassword).toBeUndefined();
+        expect(user.email).toBe("user1@example.com");
     });
 
     it("hashes user password", async function () {
-        const user = await addUser({ ...data, email: "newuser@example.com" });
+        const user = await addUser({ ...data, email: "user2@example.com" });
         const hashedPassword = await hashServices.hash(data.password);
         expect(user.password).toBe(hashedPassword);
+        expect(user.email).toBe("user2@example.com");
     });
 });
