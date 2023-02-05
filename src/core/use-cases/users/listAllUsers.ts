@@ -1,11 +1,11 @@
 import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
-import { IUser } from "@/core/interfaces/user.interfaces";
+import { IUserDBModel } from "@/core/interfaces/user.interfaces";
 import { IPaginationData } from "@/core/interfaces/data-source-generic.interface";
 
 export function listAllUsersFactory({
     userDataSource,
 }: {
-    userDataSource: IDataSource<IUser>;
+    userDataSource: IDataSource<IUserDBModel>;
 }) {
     return async function ({ limit, page, sort }: IPaginationData) {
         const newPaginationData = paginate({ limit, page, sort });

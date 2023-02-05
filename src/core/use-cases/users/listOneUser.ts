@@ -1,9 +1,9 @@
 import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
-import { IUser } from "@/core/interfaces/user.interfaces";
+import { IUserDBModel } from "@/core/interfaces/user.interfaces";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 
 interface IListOneUserHelpers {
-    userDataSource: IDataSource<IUser>;
+    userDataSource: IDataSource<IUserDBModel>;
     validId(id: string): boolean;
     errorServices: IErrorServices;
 }
@@ -13,7 +13,7 @@ export function listOneUserFactory({
     validId,
     errorServices,
 }: IListOneUserHelpers) {
-    return async function (userid: string): Promise<IUser> {
+    return async function (userid: string): Promise<IUserDBModel> {
         if (!userid) {
             return errorServices.validationError("User ID is missing");
         }
