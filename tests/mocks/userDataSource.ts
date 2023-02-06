@@ -1,7 +1,53 @@
-import { IUser, IUserDBModel } from "@/core/interfaces/user.interfaces";
+import {
+    IUserDBModel,
+    IUserPendingRequest,
+} from "@/core/interfaces/user.interfaces";
 import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
+import { faker } from "@faker-js/faker";
 
 let users: IUserDBModel[] = [];
+
+export const mockDbOperations = {
+    createFakeUser() {
+        return {
+            _id: faker.database.mongodbObjectId(),
+            firstname: faker.name.firstName(),
+            lastname: faker.name.lastName(),
+            email: faker.internet.email(),
+            profilePicture: faker.internet.avatar(),
+            password: faker.internet.password(),
+            friends: Array.from({ length: 4 }, () =>
+                faker.database.mongodbObjectId()
+            ),
+            pendingRequests: Array.from(
+                { length: 2 },
+                this.createFakePendingRequest
+            ),
+        };
+    },
+    createFakePendingRequest(): IUserPendingRequest {
+        return {
+            fullname: faker.name.fullName(),
+            friendId: faker.database.mongodbObjectId(),
+            profilePicture: faker.internet.avatar(),
+            linkToProfile: faker.internet.url(),
+        };
+    },
+
+    addFakeUserInDb() {
+        const fakeUser = this.createFakeUser();
+        users.push(fakeUser as any);
+        return fakeUser;
+    },
+
+    sendFakeFriendRequest(newRequest: IUserPendingRequest, userid: string) {
+        const user = users.filter((usr) => usr._id === userid)[0];
+        users = users.filter((usr) => usr._id !== userid);
+        user.pendingRequests.push(newRequest);
+        users.push(user);
+        return user;
+    },
+};
 
 export const userDB: IDataSource<IUserDBModel> = {
     async findAll(): Promise<IUserDBModel[]> {
