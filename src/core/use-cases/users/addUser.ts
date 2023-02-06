@@ -7,6 +7,7 @@ import {
 } from "@/core/interfaces/user.interfaces";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 import { IHashServices } from "@/services/interfaces/hashServices.interface";
+import appConfig from "@/config/index";
 
 export function addUserFactory({
     userDataSource,
@@ -18,7 +19,7 @@ export function addUserFactory({
     hashServices: IHashServices;
 }) {
     return async function (userData: IUserInputData) {
-        if (!userData) {
+        if (!userData || Object.keys(userData).length < 1) {
             return errorServices.validationError("User data is missing");
         }
 
@@ -30,7 +31,10 @@ export function addUserFactory({
             return errorServices.notFoundError("User already exists");
         }
 
+        // Create a new user
         const newUserData: IUser = Object.assign(userData, {
+            profilePicture:
+                "https://www.cloudinary.com/images/default_user.png",
             friends: [],
             pendingRequests: [],
         });
@@ -45,6 +49,7 @@ export function addUserFactory({
             lastname: validUser.lastname,
             email: validUser.email,
             password: hashedPassword,
+            profilePicture: validUser.profilePicture,
             friends: validUser.friends,
             pendingRequests: validUser.pendingRequests,
         });

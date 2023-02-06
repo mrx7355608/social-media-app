@@ -17,9 +17,12 @@ export function sendFriendRequestFactory({
     isMongoId: (str: string) => boolean;
     errorServices: IErrorServices;
 }) {
-    return async function (friendId: string, userid: string) {
-        const friend = await validateAndFetch(friendId, "Friend");
-        const user = await validateAndFetch(userid, "User");
+    return async function (receiver: string, sender: string) {
+        // receiver => to whom request is sent
+        // sender => one who is sending request
+
+        const friend = await validateAndFetch(receiver, "Friend");
+        const user = await validateAndFetch(sender, "User");
 
         // check if the user has sent request before
         const alreadyPendingRequest = friend.pendingRequests.filter(
@@ -36,6 +39,7 @@ export function sendFriendRequestFactory({
             firstname: friend.firstname,
             lastname: friend.lastname,
             email: friend.email,
+            profilePicture: friend.profilePicture,
             password: friend.password,
             confirmPassword: friend.password,
             friends: friend.friends,
@@ -51,6 +55,7 @@ export function sendFriendRequestFactory({
             firstname: validFriend.firstname,
             lastname: validFriend.lastname,
             email: validFriend.email,
+            profilePicture: friend.profilePicture,
             password: validFriend.password,
             friends: validFriend.friends,
             pendingRequests: validFriend.pendingRequests,

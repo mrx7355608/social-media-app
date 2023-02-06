@@ -1,30 +1,30 @@
 import { sendFriendRequestFactory } from "./sendFriendReq";
-import { userDB } from "@/mocks/userDataSource";
+import { userDB, mockDbOperations } from "@/mocks/userDataSource";
 import { ErrorServices } from "@/services/error.services";
-import validator from "validator";
 import { HashServices } from "@/mocks/hash.services";
-import { addUserFactory } from "./addUser";
+import { IUserDBModel } from "@/core/interfaces/user.interfaces";
+import validator from "validator";
 
 const errorServices = new ErrorServices();
-const hashServices = new HashServices();
-
-const addUser = addUserFactory({
-    userDataSource: userDB,
-    errorServices,
-    hashServices,
-});
 const sendFriendReq = sendFriendRequestFactory({
     userDataSource: userDB,
     errorServices,
-    isMongoId: (id: string) => true,
+    isMongoId: validator.isMongoId,
 });
 
 describe("Send friend request", function () {
-    it.skip("throws error on invalid friend id", async function () {
+    let user1: IUserDBModel;
+    let user2: IUserDBModel;
+
+    beforeAll(() => {
+        user1 = mockDbOperations.addFakeUserInDb() as IUserDBModel;
+        user2 = mockDbOperations.addFakeUserInDb() as IUserDBModel;
+    });
+    it("throws error on invalid friend id", async function () {
         try {
             await sendFriendReq("ab2390cf", "123123123");
         } catch (err: any) {
-            expect(err.message).toBe("Invalid friend Id");
+            expect(err.message).toBe("Friend Id is invalid");
         }
     });
 
@@ -41,20 +41,6 @@ describe("Send friend request", function () {
 
     it("throws error if request has been sent before", async function () {
         try {
-            const user1 = await addUser({
-                firstname: "test",
-                lastname: "user",
-                email: "newUser3@gmail.com",
-                password: "strongPassword123",
-                confirmPassword: "strongPassword123",
-            });
-            const user2 = await addUser({
-                firstname: "test",
-                lastname: "user",
-                email: "newUser4@gmail.com",
-                password: "strongPassword123",
-                confirmPassword: "strongPassword123",
-            });
             await sendFriendReq(user1._id, user2._id);
             await sendFriendReq(user1._id, user2._id);
         } catch (err: any) {
@@ -63,23 +49,9 @@ describe("Send friend request", function () {
     });
 
     it("send request to a user", async function () {
-        const user1 = await addUser({
-            firstname: "test",
-            lastname: "user",
-            email: "newUser@gmail.com",
-            password: "strongPassword123",
-            confirmPassword: "strongPassword123",
-        });
-        const user2 = await addUser({
-            firstname: "test",
-            lastname: "user",
-            email: "newUser2@gmail.com",
-            password: "strongPassword123",
-            confirmPassword: "strongPassword123",
-        });
-
-        const updatedFriend = await sendFriendReq(user1._id, user2._id);
-        expect(updatedFriend.pendingRequests.length).toBe(1);
-        expect(updatedFriend.pendingRequests[0].friendId).toBe(user2._id);
+        const user3 = mockDbOperations.addFakeUserInDb();
+        const updatedFriend = await sendFriendReq(user3._id, user2._id);
+        expect(updatedFriend.pendingRequests.length).toBe(3); // fake user have 2 pending reqs already
+        expect(updatedFriend.pendingRequests[2].friendId).toBe(user2._id);
     });
 });
