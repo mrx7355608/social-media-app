@@ -9,15 +9,18 @@ export class UserFactory {
     private sanitize: (str: string) => string;
     private detectSpecialChars: (str: string) => boolean;
     private emailValidator: (email: string) => boolean;
+    private isValidUrl: (url: string) => boolean;
 
     constructor({
         sanitize,
         detectSpecialChars,
         emailValidator,
+        isValidUrl,
     }: IUserEntityHelpers) {
         this.sanitize = sanitize;
         this.emailValidator = emailValidator;
         this.detectSpecialChars = detectSpecialChars;
+        this.isValidUrl = isValidUrl;
     }
 
     create(userData: IUser): IUserEntity {
@@ -30,6 +33,7 @@ export class UserFactory {
         );
         this.validateFriends(userData.friends);
         this.validatePendingRequest(userData.pendingRequests);
+        this.validateProfilePicture(userData.profilePicture);
 
         const validFirstname = this.sanitize(userData.firstname);
         const validLastname = this.sanitize(userData.lastname);
@@ -40,6 +44,7 @@ export class UserFactory {
             lastname: validLastname,
             email: userData.email,
             password: userData.password,
+            profilePicture: userData.profilePicture,
             friends: userData.friends,
             pendingRequests: userData.pendingRequests,
         });
@@ -115,6 +120,15 @@ export class UserFactory {
         // TODO: add valdiation for array values
         // they should be strings only
     }
+
+    private validateProfilePicture(pictureUrl: string): void {
+        if (!pictureUrl) {
+            throw new Error("Profile picture is missing");
+        }
+        if (!this.isValidUrl(pictureUrl)) {
+            throw new Error("Invalid picture url");
+        }
+    }
 }
 
 class User implements IUserEntity {
@@ -122,6 +136,7 @@ class User implements IUserEntity {
     lastname: string;
     email: string;
     password: string;
+    profilePicture: string;
     friends: string[];
     pendingRequests: IUserPendingRequest[];
 
@@ -132,6 +147,7 @@ class User implements IUserEntity {
         password,
         friends,
         pendingRequests,
+        profilePicture,
     }: IUser) {
         this.firstname = firstname;
         this.lastname = lastname;
@@ -139,6 +155,7 @@ class User implements IUserEntity {
         this.password = password;
         this.friends = friends;
         this.pendingRequests = pendingRequests;
+        this.profilePicture = profilePicture;
     }
 
     acceptRequest(userid: string): void {

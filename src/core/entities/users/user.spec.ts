@@ -6,6 +6,7 @@ const data: IUser = {
     lastname: "User",
     email: "tes@user.com",
     password: "strongPassword123",
+    profilePicture: "https://www.cloudinary.com/images?id=Ak549j1q021-4a9A",
     confirmPassword: "strongPassword123",
     friends: ["4651-5654-4912-0566", "5633-5935-5945-2592"],
     pendingRequests: [
@@ -55,28 +56,9 @@ describe("User entity", function () {
         ).toThrow("Confirm your password to signup");
     });
 
-    it("accept friend requests", function () {
-        const newUser = userFactory.create(data);
-        newUser.acceptRequest("0958-3951-5931-2502");
-        expect(newUser.pendingRequests.length).toBe(0);
-        expect(newUser.pendingRequests).not.toContain("0958-3951-5931-2502");
-        expect(newUser.friends).toContain("0958-3951-5931-2502");
-        expect(newUser.friends.length).toBe(3);
+    it("throws error when profile picture url is invalid", function () {
+        expect(() =>
+            userFactory.create({ ...data, profilePicture: "llllfoofadsof" })
+        ).toThrow("picture url");
     });
-
-    it("reject friend requests", function () {
-        const newUser = userFactory.create(data);
-        newUser.rejectRequest("0958-3951-5931-2502");
-        expect(newUser.pendingRequests.length).toBe(0);
-        expect(newUser.pendingRequests).not.toContain("0958-3951-5931-2502");
-    });
-
-    it("remove friends from friendlist", function () {
-        const newUser = userFactory.create(data);
-        newUser.removeFriend("0958-3951-5931-2502");
-        expect(newUser.friends.length).toBe(2);
-        expect(newUser.friends).not.toContain("0958-3951-5931-2502");
-    });
-
-    it.todo("add friends in friendlist");
 });

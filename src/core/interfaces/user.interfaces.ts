@@ -5,6 +5,7 @@ export interface IUser {
     lastname: string;
     email: string;
     password: string;
+    profilePicture: string;
     confirmPassword?: string;
     friends: string[];
     pendingRequests: IUserPendingRequest[];
@@ -41,4 +42,5 @@ export interface IUserEntityHelpers {
     sanitize(str: string): string;
     detectSpecialChars(str: string): boolean;
     emailValidator(email: string): boolean;
+    isValidUrl(url: string): boolean;
 }
