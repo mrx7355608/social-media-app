@@ -2,9 +2,15 @@ import { mockDbOperations, userDB } from "@/mocks/userDataSource";
 import { rejectRequestFactory } from "./rejectRequest";
 import { ErrorServices } from "@/services/error.services";
 import validator from "validator";
+import { acceptRequestFactory } from "./acceptRequest";
 
 const errorServices = new ErrorServices();
 
+const acceptRequest = acceptRequestFactory({
+    userDataSource: userDB,
+    errorServices,
+    isMongoId: validator.isMongoId,
+});
 const rejectRequest = rejectRequestFactory({
     userDataSource: userDB,
     errorServices,
@@ -35,5 +41,15 @@ describe("Rejects friend request", function () {
         const user = await rejectRequest(fakeRequest.friendId, fakeUser._id);
         expect(user.pendingRequests).not.toContain(fakeRequest.friendId);
         expect(user.pendingRequests.length).toBe(2);
+    });
+
+    it("accepts requets", async function () {
+        const fakeUser = mockDbOperations.addFakeUserInDb();
+        const requestId = fakeUser.pendingRequests[0].friendId;
+        const user = await acceptRequest(requestId, fakeUser._id);
+        expect(user.pendingRequests).not.toContain(requestId);
+        expect(user.pendingRequests.length).toBe(1);
+        expect(user.friends.length).toBe(5);
+        expect(user.friends).toContain(requestId);
     });
 });
