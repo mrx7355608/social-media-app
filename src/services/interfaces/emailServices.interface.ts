@@ -1,3 +1,15 @@
 export interface IEmailServices {
-    send(userid: string, userEmail: string): Promise<void>;
+    sendResetPasswordEmail(
+        userid: string,
+        receipientEmail: string
+    ): Promise<IEmailSentResponse>;
+
+    sendAccountVerificationEmail(
+        userid: string,
+        receipientEmail: string
+    ): Promise<IEmailSentResponse>;
+}
+
+export interface IEmailSentResponse {
+    sent: boolean;
 }
