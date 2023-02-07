@@ -8,4 +8,7 @@ export default {
         port: 123,
         sender: "bob@example.com",
     },
+    token: {
+        secret: "some-secret",
+    },
 };
