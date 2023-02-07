@@ -12,4 +12,5 @@ export interface IEmailServices {
 
 export interface IEmailSentResponse {
     sent: boolean;
+    message: string;
 }

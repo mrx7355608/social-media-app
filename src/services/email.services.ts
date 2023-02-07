@@ -87,26 +87,42 @@ export class EmailServices implements IEmailServices {
         userid: string,
         receipientEmail: string
     ): Promise<IEmailSentResponse> {
-        const transport = this.setupTransport();
-        const mail = this.createResetPasswordMail(userid, receipientEmail);
-        await transport.sendMail(mail);
-        return {
-            sent: true,
-        };
+        try {
+            const transport = this.setupTransport();
+            const mail = this.createResetPasswordMail(userid, receipientEmail);
+            await transport.sendMail(mail);
+            return {
+                sent: true,
+                message: "Email sent successfully!",
+            };
+        } catch (err: any) {
+            return {
+                sent: false,
+                message: "Email was not sent due to an un-expected error",
+            };
+        }
     }
 
     async sendAccountVerificationEmail(
         userid: string,
         receipientEmail: string
     ): Promise<IEmailSentResponse> {
-        const transport = this.setupTransport();
-        const mail = this.createAccountVerificationMail(
-            userid,
-            receipientEmail
-        );
-        await transport.sendMail(mail);
-        return {
-            sent: true,
-        };
+        try {
+            const transport = this.setupTransport();
+            const mail = this.createAccountVerificationMail(
+                userid,
+                receipientEmail
+            );
+            await transport.sendMail(mail);
+            return {
+                sent: true,
+                message: "Email sent successfully!",
+            };
+        } catch (err: any) {
+            return {
+                sent: false,
+                message: "Email was not sent due to an un-expected error",
+            };
+        }
     }
 }
