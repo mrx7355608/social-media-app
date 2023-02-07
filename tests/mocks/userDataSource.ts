@@ -48,6 +48,14 @@ export const mockDbOperations = {
         users.push(user);
         return user;
     },
+
+    verifyFakeUserEmail(email: string) {
+        const user = users.filter((usr) => usr.email === email)[0];
+        users = users.filter((usr) => usr.email !== email);
+        user.isEmailVerified = true;
+        users.push(user);
+        return user;
+    },
 };
 
 export const userDB: IDataSource<IUserDBModel> = {

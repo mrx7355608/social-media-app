@@ -36,10 +36,6 @@ export function forgotPasswordFactory({
             );
         }
 
-        await emailServices.send(user._id, user.email);
-
-        return {
-            sent: true,
-        };
+        return await emailServices.sendResetPasswordEmail(user._id, user.email);
     };
 }
