@@ -192,4 +192,8 @@ class User implements IUserEntity {
     verifyEmail(): void {
         this.isEmailVerified = true;
     }
+
+    updateProfilePicture(url: string): void {
+        this.profilePicture = url;
+    }
 }

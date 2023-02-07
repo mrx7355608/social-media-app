@@ -22,6 +22,7 @@ export interface IUserEntity extends IUser {
     addRequest(newRequest: IUserPendingRequest): void;
     removeFriend(friendId: string): void;
     cancelRequest(friendId: string): void;
+    updateProfilePicture(url: string): void;
     verifyEmail(): void;
 }
 
