@@ -54,6 +54,13 @@ describe("Add User", function () {
         expect(user.email).toBe("user1@example.com");
     });
 
+    it("newly created user should not have a isEmailVerified field set to true", async function () {
+        const user = await addUser({ ...data, email: "user0@example.com" });
+        expect(user.confirmPassword).toBeUndefined();
+        expect(user.email).toBe("user0@example.com");
+        expect(user.isEmailVerified).toBe(false);
+    });
+
     it("hashes user password", async function () {
         const user = await addUser({ ...data, email: "user2@example.com" });
         const hashedPassword = await hashServices.hash(data.password);

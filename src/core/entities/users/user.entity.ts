@@ -45,6 +45,7 @@ export class UserFactory {
             email: userData.email,
             password: userData.password,
             profilePicture: userData.profilePicture,
+            isEmailVerified: userData.isEmailVerified,
             friends: userData.friends,
             pendingRequests: userData.pendingRequests,
         });
@@ -136,6 +137,7 @@ class User implements IUserEntity {
     lastname: string;
     email: string;
     password: string;
+    isEmailVerified: boolean;
     profilePicture: string;
     friends: string[];
     pendingRequests: IUserPendingRequest[];
@@ -148,11 +150,13 @@ class User implements IUserEntity {
         friends,
         pendingRequests,
         profilePicture,
+        isEmailVerified,
     }: IUser) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
+        this.isEmailVerified = isEmailVerified;
         this.friends = friends;
         this.pendingRequests = pendingRequests;
         this.profilePicture = profilePicture;
@@ -183,5 +187,9 @@ class User implements IUserEntity {
         this.pendingRequests = this.pendingRequests.filter(
             (reqs) => reqs.friendId !== friendId
         );
+    }
+
+    verifyEmail(): void {
+        this.isEmailVerified = true;
     }
 }

@@ -7,6 +7,7 @@ export interface IUser {
     password: string;
     profilePicture: string;
     confirmPassword?: string;
+    isEmailVerified: boolean;
     friends: string[];
     pendingRequests: IUserPendingRequest[];
 }
@@ -21,6 +22,7 @@ export interface IUserEntity extends IUser {
     addRequest(newRequest: IUserPendingRequest): void;
     removeFriend(friendId: string): void;
     cancelRequest(friendId: string): void;
+    verifyEmail(): void;
 }
 
 export interface IUserPendingRequest {

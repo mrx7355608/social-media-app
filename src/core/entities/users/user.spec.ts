@@ -6,6 +6,7 @@ const data: IUser = {
     lastname: "User",
     email: "tes@user.com",
     password: "strongPassword123",
+    isEmailVerified: false,
     profilePicture: "https://www.cloudinary.com/images?id=Ak549j1q021-4a9A",
     confirmPassword: "strongPassword123",
     friends: ["4651-5654-4912-0566", "5633-5935-5945-2592"],

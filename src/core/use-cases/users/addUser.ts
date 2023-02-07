@@ -37,6 +37,7 @@ export function addUserFactory({
                 "https://www.cloudinary.com/images/default_user.png",
             friends: [],
             pendingRequests: [],
+            isEmailVerified: false,
         });
 
         const validUser = userFactory.create(newUserData);
@@ -50,6 +51,7 @@ export function addUserFactory({
             email: validUser.email,
             password: hashedPassword,
             profilePicture: validUser.profilePicture,
+            isEmailVerified: validUser.isEmailVerified,
             friends: validUser.friends,
             pendingRequests: validUser.pendingRequests,
         });

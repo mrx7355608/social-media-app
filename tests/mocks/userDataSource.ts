@@ -16,6 +16,7 @@ export const mockDbOperations = {
             email: faker.internet.email(),
             profilePicture: faker.internet.avatar(),
             password: faker.internet.password(),
+            isEmailVerified: false,
             friends: Array.from({ length: 4 }, () =>
                 faker.database.mongodbObjectId()
             ),
