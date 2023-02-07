@@ -3,4 +3,5 @@ export interface IErrorServices {
     validationError(message: string): never;
     internalServerError(): never;
     invalidIdError(message: string): never;
+    authenticationError(message: string): never;
 }

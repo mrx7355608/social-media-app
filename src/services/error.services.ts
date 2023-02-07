@@ -17,4 +17,8 @@ export class ErrorServices implements IErrorServices {
     invalidIdError(message: string): never {
         throw new AppError(message, 400);
     }
+
+    authenticationError(message: string): never {
+        throw new AppError(message, 401);
+    }
 }
