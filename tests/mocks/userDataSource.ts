@@ -56,6 +56,12 @@ export const mockDbOperations = {
         users.push(user);
         return user;
     },
+
+    createFakeAccountVerificationToken() {
+        const fakeUser = this.addFakeUserInDb();
+        const token = `somesecret-${JSON.stringify({ userid: fakeUser._id })}`;
+        return { fakeUser, token };
+    },
 };
 
 export const userDB: IDataSource<IUserDBModel> = {
