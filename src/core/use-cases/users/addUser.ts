@@ -7,7 +7,6 @@ import {
 } from "@/core/interfaces/user.interfaces";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 import { IHashServices } from "@/services/interfaces/hashServices.interface";
-import appConfig from "@/config/index";
 
 export function addUserFactory({
     userDataSource,
