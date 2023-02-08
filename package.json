@@ -6,7 +6,8 @@
   "author": "mrx7355608 <mrx7355608@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest --watch --detectOpenHandles"
+    "test": "jest --watch --detectOpenHandles",
+    "dev": "tsc-watch --onSuccess \"nodemon ./build/src/main.js\" "
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -41,8 +42,10 @@
     "@types/sanitize-html": "^2.8.0",
     "@types/validator": "^13.7.11",
     "jest": "^29.4.1",
+    "nodemon": "^2.0.20",
     "ts-jest": "^29.0.5",
     "ts-node": "^10.9.1",
+    "tsc-watch": "^6.0.0",
     "typescript": "^4.9.4"
   },
   "_moduleAliases": {
