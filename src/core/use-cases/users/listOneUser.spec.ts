@@ -6,8 +6,8 @@ import { userDB } from "@/mocks/userDataSource";
 const errorServices = new ErrorServices();
 const listOneUser = listOneUserFactory({
     userDataSource: userDB,
-    validId: validator.isMongoId,
     errorServices,
+    isMongoId: validator.isMongoId,
 });
 
 describe("List one user", function () {

@@ -5,11 +5,11 @@ import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 import { IJwtServices } from "@/services/interfaces/jwtServices.interface";
 
 export function verifyAccountFactory({
-    userDB,
+    userDataSource,
     errorServices,
     jwtServices,
 }: {
-    userDB: IDataSource<IUserDBModel>;
+    userDataSource: IDataSource<IUserDBModel>;
     errorServices: IErrorServices;
     jwtServices: IJwtServices;
 }) {
@@ -25,7 +25,7 @@ export function verifyAccountFactory({
             );
         }
 
-        const user = await userDB.findById(payload.userid);
+        const user = await userDataSource.findById(payload.userid);
         if (!user) {
             return errorServices.notFoundError("User does not exist anymore");
         }
@@ -43,7 +43,7 @@ export function verifyAccountFactory({
         });
         validUser.verifyEmail();
 
-        return await userDB.update(user._id, {
+        return await userDataSource.update(user._id, {
             firstname: validUser.firstname,
             lastname: validUser.lastname,
             email: validUser.email,

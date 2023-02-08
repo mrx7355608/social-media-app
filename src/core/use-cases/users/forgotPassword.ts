@@ -4,12 +4,12 @@ import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 import { IEmailServices } from "@/services/interfaces/emailServices.interface";
 
 export function forgotPasswordFactory({
-    userDB,
+    userDataSource,
     errorServices,
-    emailValidator,
     emailServices,
+    emailValidator,
 }: {
-    userDB: IDataSource<IUserDBModel>;
+    userDataSource: IDataSource<IUserDBModel>;
     errorServices: IErrorServices;
     emailServices: IEmailServices;
     emailValidator: (str: string) => boolean;
@@ -23,7 +23,7 @@ export function forgotPasswordFactory({
             return errorServices.validationError("Invalid email");
         }
 
-        const user = await userDB.findOne({ email });
+        const user = await userDataSource.findOne({ email });
         if (!user) {
             return errorServices.notFoundError(
                 "Account with this email does not exist"

@@ -4,20 +4,20 @@ import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 
 interface IListOneUserHelpers {
     userDataSource: IDataSource<IUserDBModel>;
-    validId(id: string): boolean;
+    isMongoId(id: string): boolean;
     errorServices: IErrorServices;
 }
 
 export function listOneUserFactory({
     userDataSource,
-    validId,
     errorServices,
+    isMongoId,
 }: IListOneUserHelpers) {
     return async function (userid: string): Promise<IUserDBModel> {
         if (!userid) {
             return errorServices.validationError("User ID is missing");
         }
-        if (!validId(userid)) {
+        if (!isMongoId(userid)) {
             return errorServices.invalidIdError("User ID is invalid");
         }
 

@@ -7,7 +7,7 @@ import { mockDbOperations } from "@/mocks/userDataSource";
 const errorServices = new ErrorServices();
 const jwtServices = new MockJwtServices();
 const verifyAccount = verifyAccountFactory({
-    userDB,
+    userDataSource: userDB,
     errorServices,
     jwtServices,
 });

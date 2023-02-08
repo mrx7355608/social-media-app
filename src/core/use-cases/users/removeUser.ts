@@ -3,11 +3,11 @@ import { IUserDBModel } from "@/core/interfaces/user.interfaces";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 
 export function removeUserFactory({
-    userDB,
-    isMongoId,
+    userDataSource,
     errorServices,
+    isMongoId,
 }: {
-    userDB: IDataSource<IUserDBModel>;
+    userDataSource: IDataSource<IUserDBModel>;
     errorServices: IErrorServices;
     isMongoId: (id: string) => boolean;
 }) {
@@ -19,10 +19,10 @@ export function removeUserFactory({
             return errorServices.invalidIdError("User Id is invalid");
         }
 
-        const user = await userDB.findById(userid);
+        const user = await userDataSource.findById(userid);
         if (!user) {
             return errorServices.notFoundError("User does not exist");
         }
-        return await userDB.deleteData(userid);
+        return await userDataSource.deleteData(userid);
     };
 }

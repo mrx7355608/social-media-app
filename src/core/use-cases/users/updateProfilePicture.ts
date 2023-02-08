@@ -4,11 +4,11 @@ import { IUser, IUserDBModel } from "@/core/interfaces/user.interfaces";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 
 export function updateProfilePictureFactory({
-    userDB,
-    isValidUrl,
+    userDataSource,
     errorServices,
+    isValidUrl,
 }: {
-    userDB: IDataSource<IUserDBModel>;
+    userDataSource: IDataSource<IUserDBModel>;
     errorServices: IErrorServices;
     isValidUrl: (url: string) => boolean;
 }) {
@@ -20,7 +20,7 @@ export function updateProfilePictureFactory({
             return errorServices.validationError("");
         }
 
-        const user = await userDB.findById(userid);
+        const user = await userDataSource.findById(userid);
         if (!user) {
             return errorServices.notFoundError("User does not exist");
         }
@@ -28,7 +28,7 @@ export function updateProfilePictureFactory({
         const validUser = userFactory.create(user);
         validUser.updateProfilePicture(pictureUrl);
 
-        return await userDB.update<IUser>(userid, {
+        return await userDataSource.update<IUser>(userid, {
             firstname: validUser.firstname,
             lastname: validUser.lastname,
             email: validUser.lastname,

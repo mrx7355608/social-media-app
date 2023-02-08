@@ -1,7 +1,6 @@
 import { sendFriendRequestFactory } from "./sendFriendReq";
 import { userDB, mockDbOperations } from "@/mocks/userDataSource";
 import { ErrorServices } from "@/services/error.services";
-import { HashServices } from "@/mocks/hash.services";
 import { IUserDBModel } from "@/core/interfaces/user.interfaces";
 import validator from "validator";
 

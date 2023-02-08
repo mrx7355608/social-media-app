@@ -10,8 +10,8 @@ import appConfig from "@/config/index";
 
 export function sendFriendRequestFactory({
     userDataSource,
-    isMongoId,
     errorServices,
+    isMongoId,
 }: {
     userDataSource: IDataSource<IUserDBModel>;
     isMongoId: (str: string) => boolean;
