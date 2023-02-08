@@ -1,7 +1,7 @@
 import { userDB } from "@/mocks/userDataSource";
 import { addUserFactory } from "./addUser";
 import { ErrorServices } from "@/services/error.services";
-import { IUserInputData } from "@/core/interfaces/user.interfaces";
+import { IUser } from "@/core/interfaces/user.interfaces";
 import { HashServices } from "@/mocks/hash.services";
 
 const errorServices = new ErrorServices();
@@ -12,12 +12,16 @@ const addUser = addUserFactory({
     hashServices,
 });
 
-const data: IUserInputData = {
+const data: IUser = {
     firstname: "test",
     lastname: "user",
     email: "user@exists.com",
     password: "strongPassword123",
     confirmPassword: "strongPassword123",
+    friends: [],
+    pendingRequests: [],
+    profilePicture: "https://www.cloudinary/images/jq20fns.png",
+    isEmailVerified: false,
 };
 
 describe("Add User", function () {

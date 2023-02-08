@@ -1,10 +1,6 @@
 import { userFactory } from "@/core/entities";
 import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
-import {
-    IUser,
-    IUserDBModel,
-    IUserInputData,
-} from "@/core/interfaces/user.interfaces";
+import { IUser, IUserDBModel } from "@/core/interfaces/user.interfaces";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 import { IHashServices } from "@/services/interfaces/hashServices.interface";
 
@@ -17,7 +13,7 @@ export function addUserFactory({
     errorServices: IErrorServices;
     hashServices: IHashServices;
 }) {
-    return async function (userData: IUserInputData) {
+    return async function (userData: IUser) {
         if (!userData || Object.keys(userData).length < 1) {
             return errorServices.validationError("User data is missing");
         }
@@ -31,15 +27,7 @@ export function addUserFactory({
         }
 
         // Create a new user
-        const newUserData: IUser = Object.assign(userData, {
-            profilePicture:
-                "https://www.cloudinary.com/images/default_user.png",
-            friends: [],
-            pendingRequests: [],
-            isEmailVerified: false,
-        });
-
-        const validUser = userFactory.create(newUserData);
+        const validUser = userFactory.create(userData);
         const hashedPassword = await hashServices.hash(validUser.password);
 
         // *** TODO: send a verification email *** //
