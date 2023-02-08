@@ -10,18 +10,18 @@ export class EmailServices implements IEmailServices {
     constructor() {}
     private setupTransport() {
         const transporter = nodemailer.createTransport({
-            host: appConfig.email.host,
-            port: appConfig.email.port,
+            host: appConfig.emailHost,
+            port: appConfig.emailPort,
             auth: {
-                user: appConfig.email.user,
-                pass: appConfig.email.pass,
+                user: appConfig.emailUser,
+                pass: appConfig.emailPass,
             },
-        });
+        } as any);
         return transporter;
     }
 
     private createToken(userid: string): string {
-        return jwt.sign({ userid }, appConfig.token.secret, {
+        return jwt.sign({ userid }, appConfig.tokenSecret, {
             expiresIn: "5m",
         });
     }
@@ -48,7 +48,7 @@ export class EmailServices implements IEmailServices {
             </div>
             `,
             to: receipientEmail,
-            from: appConfig.email.sender,
+            from: appConfig.emailSender,
             subject: "Reset Password",
         };
     }
@@ -78,7 +78,7 @@ export class EmailServices implements IEmailServices {
             </div>
             `,
             to: receipientEmail,
-            from: appConfig.email.sender,
+            from: appConfig.emailSender,
             subject: "Account Verification",
         };
     }
