@@ -6,7 +6,7 @@
         "baseUrl": "./",
         "paths": {
             "@/core/*": ["src/core/*"],
-            "@/adapters/*": ["src/adapters/*"],
+            "@/controllers/*": ["src/controllers/*"],
             "@/frameworks/*": ["src/frameworks/*"],
             "@/utils/*": ["src/utils/*"],
             "@/services/*": ["src/services/*"],

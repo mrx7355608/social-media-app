@@ -50,11 +50,11 @@
   },
   "_moduleAliases": {
     "@/core": "build/src/core",
-    "@/adapters": "build/src/adapters",
+    "@/controllers": "build/src/controllers",
     "@/frameworks": "build/src/frameworks",
     "@/data": "build/src/data",
     "@/services": "build/src/services",
     "@/config": "build/config",
-    "@/utils": "build/src/util*"
+    "@/utils": "build/src/utils"
   }
 }
