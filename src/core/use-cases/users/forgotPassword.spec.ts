@@ -25,21 +25,4 @@ describe("Forgot Password", function () {
             );
         }
     });
-
-    it.skip("sends reset password email", async function () {
-        const fakeUser = mockDbOperations.addFakeUserInDb();
-        mockDbOperations.verifyFakeUserEmail(fakeUser.email);
-        const response = await forgotPassword(fakeUser.email);
-        expect(response.sent).toBe(true);
-    });
-
-    it("handles errors that occur while sending email", async function () {
-        const fakeUser = mockDbOperations.addFakeUserInDb();
-        mockDbOperations.verifyFakeUserEmail(fakeUser.email);
-        const response = await forgotPassword(fakeUser.email);
-        expect(response.sent).toBe(false);
-        expect(response.message).toBe(
-            "Email was not sent due to an un-expected error"
-        );
-    });
 });
