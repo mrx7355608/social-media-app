@@ -71,8 +71,12 @@ export class EmailServices implements IEmailServices {
                     border: 3px solid #2d2d2d;
                     font-family: sans-serif;
                     color: #2d2d2d">
-                    <a style="color: inherit; text-decoration: none; font-family: sans-serif;" href="${appConfig.apiUrl}/auth/account-verification?token=${token}">
-                        Verify Email 
+                    <a style="
+                        color: inherit; 
+                        text-decoration: none; 
+                        font-family: sans-serif;" 
+                        href="${appConfig.apiUrl}/auth/verify-account?token=${token}">
+                            Verify Email 
                     </a>
                 </button>
             </div>
