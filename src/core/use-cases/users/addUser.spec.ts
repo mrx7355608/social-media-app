@@ -3,13 +3,16 @@ import { addUserFactory } from "./addUser";
 import { ErrorServices } from "@/services/error.services";
 import { IUser } from "@/core/interfaces/user.interfaces";
 import { HashServices } from "@/mocks/hash.services";
+import { MockEmailServices } from "@/mocks/emailServices";
 
+const emailServices = new MockEmailServices();
 const errorServices = new ErrorServices();
 const hashServices = new HashServices();
 const addUser = addUserFactory({
     userDataSource: userDB,
     errorServices,
     hashServices,
+    emailServices,
 });
 
 const data: IUser = {

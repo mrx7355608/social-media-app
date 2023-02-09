@@ -1,6 +1,7 @@
 import { userFactory } from "@/core/entities";
 import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
 import { IUser, IUserDBModel } from "@/core/interfaces/user.interfaces";
+import { IEmailServices } from "@/services/interfaces/emailServices.interface";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 import { IHashServices } from "@/services/interfaces/hashServices.interface";
 
@@ -8,10 +9,12 @@ export function addUserFactory({
     userDataSource,
     errorServices,
     hashServices,
+    emailServices,
 }: {
     userDataSource: IDataSource<IUserDBModel>;
     errorServices: IErrorServices;
     hashServices: IHashServices;
+    emailServices: IEmailServices;
 }) {
     return async function (userData: IUser) {
         if (!userData || Object.keys(userData).length < 1) {
@@ -23,16 +26,15 @@ export function addUserFactory({
         });
 
         if (userExists) {
-            return errorServices.notFoundError("User already exists");
+            return errorServices.validationError("User already exists");
         }
 
         // Create a new user
         const validUser = userFactory.create(userData);
         const hashedPassword = await hashServices.hash(validUser.password);
 
-        // *** TODO: send a verification email *** //
-
-        return await userDataSource.insert<IUser>({
+        // Send a verification email
+        const newUser = await userDataSource.insert<IUser>({
             firstname: validUser.firstname,
             lastname: validUser.lastname,
             email: validUser.email,
@@ -42,5 +44,12 @@ export function addUserFactory({
             friends: validUser.friends,
             pendingRequests: validUser.pendingRequests,
         });
+
+        await emailServices.sendAccountVerificationEmail(
+            newUser._id,
+            newUser.email
+        );
+
+        return newUser;
     };
 }

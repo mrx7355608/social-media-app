@@ -23,19 +23,10 @@ export function postRegisterUserController({
             };
 
             const newUser = await addUser(newUserData);
-
-            // Remove un-wanted fields
-            (newUser as any).isEmailVerified = undefined;
-            (newUser as any).friends = undefined;
-            (newUser as any).photos = undefined;
-            (newUser as any).password = undefined;
-            (newUser as any).email = undefined;
-            (newUser as any).__v = undefined;
-            (newUser as any).pendingRequests = undefined;
-
+            const message = `A verification email has been sent to ${newUser.email}. You must verify your account before you login`;
             return {
                 statusCode: 201,
-                body: { user: newUser },
+                body: { message },
             };
         } catch (err: any) {
             return {
