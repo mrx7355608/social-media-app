@@ -61,18 +61,18 @@ export class EmailServices implements IEmailServices {
         return {
             html: `
             <div style="padding: 20px;">
-                <h3>Account Verification</h3>
-                <p>Hello dear user.</p>
-                <br/>
-                <p>Click below to verify your account</p>
-                <br/>
+                <h2 style="font-family: sans-serif;" >Account Verification</h2>
+                <p style="font-family: sans-serif;">Hello dear user.</p>
+                <p style="font-family: sans-serif;">Click below to verify your account</p>
+                <p style="font-family: sans-serif; font-style:bold;">It is valid for 5 minutes only</p>
                 <button style="
                     background: transparent; 
-                    padding: 10px;
+                    padding: 10px 15px;
                     border: 3px solid #2d2d2d;
+                    font-family: sans-serif;
                     color: #2d2d2d">
-                    <a href="${appConfig.apiUrl}/auth/account-verification?token=${token}">
-                        Verify 
+                    <a style="color: inherit; text-decoration: none; font-family: sans-serif;" href="${appConfig.apiUrl}/auth/account-verification?token=${token}">
+                        Verify Email 
                     </a>
                 </button>
             </div>
