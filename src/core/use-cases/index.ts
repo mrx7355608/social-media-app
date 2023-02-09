@@ -15,6 +15,7 @@ import { HashServices } from "@/services/hash.services";
 import { JwtServices } from "@/services/jwt.services";
 import { EmailServices } from "@/services/email.services";
 import { UserDataSource } from "@/data/user.data";
+import { sendVerificationEmailFactory } from "./users/sendVerificationEmail";
 import validator from "validator";
 
 const errorServices = new ErrorServices();
@@ -36,6 +37,7 @@ const addUser = addUserFactory({
     userDataSource,
     errorServices,
     hashServices,
+    emailServices,
 });
 const removeUser = removeUserFactory({
     userDataSource,
@@ -73,6 +75,12 @@ const updateProfilePicture = updateProfilePictureFactory({
     errorServices,
     isValidUrl: validator.isURL,
 });
+const sendVerificationEmail = sendVerificationEmailFactory({
+    userDataSource,
+    errorServices,
+    emailServices,
+    emailValidator: validator.isEmail,
+});
 
 export const userServices = {
     listAllUsers,
@@ -85,4 +93,5 @@ export const userServices = {
     rejectRequest,
     sendFriendReq,
     updateProfilePicture,
+    sendVerificationEmail,
 };
