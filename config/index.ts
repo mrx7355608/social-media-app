@@ -8,4 +8,5 @@ export default {
     emailPort: process.env.EMAIL_PORT as string,
     emailSender: process.env.EMAIL_SENDER,
     tokenSecret: process.env.AUTH_TOKEN_SECRET as string,
+    sessionSecret: process.env.SESSION_SECRET as string,
 };
