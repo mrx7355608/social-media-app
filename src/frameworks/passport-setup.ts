@@ -14,14 +14,6 @@ export default function (passport: any) {
             done
         ) {
             try {
-                if (!email) {
-                    return done(null, false, { message: "Email is missing" });
-                }
-                if (!password) {
-                    return done(null, false, {
-                        message: "Password is missing",
-                    });
-                }
                 if (!validator.isEmail(email)) {
                     return done(null, false, { message: "Invalid email" });
                 }
@@ -33,7 +25,11 @@ export default function (passport: any) {
                     });
                 }
 
-                if (!hashServices.compare(user.password, password)) {
+                const isValidPassword = await hashServices.compare(
+                    user.password,
+                    password
+                );
+                if (!isValidPassword) {
                     return done(null, false, {
                         message: "Incorrect email or password",
                     });
