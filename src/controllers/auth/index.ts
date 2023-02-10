@@ -3,7 +3,11 @@ import { userServices } from "@/core/use-cases";
 import { verifyAccountController } from "./get-verify-account";
 import { postVerificationEmail as resendVerificationEmailController } from "./post-verification-email";
 import { forgotPasswordController } from "./post-forgot-password";
+import { loginController } from "./login";
+import { logoutController } from "./logout";
 
+const login = loginController();
+const logout = logoutController();
 const registerUser = postRegisterUserController({
     addUser: userServices.addUser,
 });
@@ -22,4 +26,6 @@ export const authController = {
     verifyAccount,
     resendAccountVerificationEmail,
     forgotPassword,
+    login,
+    logout,
 };
