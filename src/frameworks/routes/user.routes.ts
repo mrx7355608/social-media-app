@@ -1,12 +1,13 @@
 import { Router } from "express";
+import { userControllers } from "@/controllers/users/index";
+import { makeRequest } from "../makeRequestHandler";
 
 export const userRouter = Router();
 
-// userRouter.get("/");
-// userRouter.get("/:id");
+userRouter.get("/", makeRequest(userControllers.getUsers));
+userRouter.get("/:id", makeRequest(userControllers.getOneUser));
 // userRouter.get("/:id/photos");
 // userRouter.get("/:id/friends");
-// userRouter.post("/");
 // userRouter.post("/send-friend-request/:id");
 // userRouter.get("/me");
 // userRouter.get("/me/photos");
