@@ -21,7 +21,7 @@ export function verifyAccountFactory({
         const payload = jwtServices.verify(token);
         if (!payload) {
             return errorServices.authenticationError(
-                "Auth token is invalid or expired, request for a new verification link"
+                "Auth token is invalid or expired"
             );
         }
 

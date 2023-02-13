@@ -94,7 +94,7 @@ export class UserFactory {
         }
 
         if (!confirmPassword) {
-            throw new Error("Confirm your password to signup");
+            throw new Error("Confirm your password to continue");
         }
         if (typeof confirmPassword !== "string") {
             throw new Error("Confirm password should be text only");

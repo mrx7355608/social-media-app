@@ -9,6 +9,7 @@ export function postRegisterUserController({
     return async function (httpRequset: IHttpRequest) {
         try {
             const userInput = httpRequset.body;
+            // TODO: fix user profile picture
             const newUserData: IUser = {
                 firstname: userInput.firstname,
                 lastname: userInput.lastname,

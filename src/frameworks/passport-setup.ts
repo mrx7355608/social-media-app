@@ -25,6 +25,12 @@ export default function (passport: any) {
                     });
                 }
 
+                if (!user.isEmailVerified) {
+                    return done(null, false, {
+                        message: "You must verify your email to login",
+                    });
+                }
+
                 const isValidPassword = await hashServices.compare(
                     user.password,
                     password

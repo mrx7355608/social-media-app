@@ -8,10 +8,18 @@ export function loginController() {
             return res.status(400).json({ error: "You are already logged in" });
         }
         passport.authenticate("local", function (err, user, info) {
-            if (err) return res.status(500).json({ error: err.message });
-            if (info) return res.status(400).json({ error: info.message });
+            if (err) {
+                return res.status(500).json({ error: "Something went wrong" });
+            }
+            if (info) {
+                return res.status(400).json({ error: info.message });
+            }
             req.logIn(user, function (err) {
-                if (err) return res.status(500).json({ error: err.message });
+                if (err) {
+                    return res
+                        .status(500)
+                        .json({ error: "Something went wrong" });
+                }
                 return res.status(200).json({ login: true });
             });
         })(req, res, next);
