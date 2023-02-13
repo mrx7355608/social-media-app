@@ -30,6 +30,12 @@ export function sendVerificationEmailFactory({
             );
         }
 
+        if (user.isEmailVerified) {
+            return errorServices.validationError(
+                "Your account is already verified."
+            );
+        }
+
         await emailServices.sendAccountVerificationEmail(user._id, user.email);
         return user;
     };
