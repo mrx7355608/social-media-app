@@ -35,7 +35,7 @@ export function resetPasswordFactory({
         const payload = jwtServices.verify(token);
         if (!payload) {
             return errorServices.authenticationError(
-                "Auth token is invalid or expired."
+                "Auth token is invalid or expired"
             );
         }
 

@@ -5,7 +5,7 @@ const config: Config.InitialOptions = {
     testEnvironment: "node",
     moduleNameMapper: {
         "@/core/(.*)": "<rootDir>/src/core/$1",
-        "@/adapters/(.*)": "<rootDir>/src/adapters/$1",
+        "@/controllers/(.*)": "<rootDir>/src/controllers/$1",
         "@/frameworks/(.*)": "<rootDir>/src/frameworks/$1",
         "@/data/(.*)": "<rootDir>/src/data/$1",
         "@/utils/(.*)": "<rootDir>/src/utils/$1",
