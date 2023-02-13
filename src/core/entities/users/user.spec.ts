@@ -54,7 +54,7 @@ describe("User entity", function () {
     it("throws error when confirm password is missing", function () {
         expect(() =>
             userFactory.create({ ...data, confirmPassword: undefined })
-        ).toThrow("Confirm your password to signup");
+        ).toThrow("Confirm your password to continue");
     });
 
     it("throws error when profile picture url is invalid", function () {

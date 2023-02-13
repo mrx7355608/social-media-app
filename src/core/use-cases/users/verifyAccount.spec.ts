@@ -17,9 +17,7 @@ describe("Verify Account", function () {
         try {
             await verifyAccount("lalallalala");
         } catch (err: any) {
-            expect(err.message).toBe(
-                "Auth token is invalid or expired, request for a new verification link"
-            );
+            expect(err.message).toBe("Auth token is invalid or expired");
         }
     });
     it("verifies account", async function () {
