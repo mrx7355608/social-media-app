@@ -13,6 +13,7 @@ const config: Config.InitialOptions = {
         "@/mocks/(.*)": "<rootDir>/tests/mocks/$1",
         "@/config/(.*)": "<rootDir>/config/$1",
     },
+    modulePathIgnorePatterns: ["<rootDir>/build/"],
 };
 
 export default config;
