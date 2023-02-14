@@ -18,7 +18,7 @@ describe("Testing Auth Routes", function () {
     });
 
     describe("Logout", function () {
-        it("throws error if user is not logged in", async function () {
+        it("does not logout if user is not logged in, instead it returns a error response", async function () {
             const response = await agent
                 .post("/api/v1/auth/logout")
                 .expect(401);
@@ -94,5 +94,4 @@ describe("Testing Auth Routes", function () {
             );
         });
     });
-    // describe("Signup", function () {});
 });
