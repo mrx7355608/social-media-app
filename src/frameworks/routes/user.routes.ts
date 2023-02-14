@@ -8,6 +8,18 @@ export const userRouter = Router();
 userRouter.use(isAuth);
 userRouter.get("/", makeRequest(userControllers.getUsers));
 userRouter.get("/:id", makeRequest(userControllers.getOneUser));
+userRouter.post(
+    "/send-friend-request/:id",
+    makeRequest(userControllers.sendReq)
+);
+userRouter.patch(
+    "/pending-requests/accept/:id",
+    makeRequest(userControllers.acceptRequest)
+);
+userRouter.patch(
+    "/pending-requests/reject/:id",
+    makeRequest(userControllers.rejectRequest)
+);
 // userRouter.get("/:id/photos");
 // userRouter.get("/:id/friends");
 // userRouter.post("/send-friend-request/:id");
