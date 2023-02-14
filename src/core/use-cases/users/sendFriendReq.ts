@@ -21,12 +21,18 @@ export function sendFriendRequestFactory({
         // receiver => to whom request is sent
         // sender => one who is sending request
 
+        if (receiver === sender) {
+            return errorServices.validationError(
+                "You cannot send request to your own self"
+            );
+        }
+
         const friend = await validateAndFetch(receiver, "Friend");
         const user = await validateAndFetch(sender, "User");
 
         // check if the user has sent request before
         const alreadyPendingRequest = friend.pendingRequests.filter(
-            (reqs) => reqs.friendId === user._id
+            (reqs) => reqs.friendId === String(user._id)
         )[0];
         if (alreadyPendingRequest) {
             return errorServices.validationError(

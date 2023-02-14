@@ -23,6 +23,13 @@ export function acceptRequestFactory({
             return errorServices.notFoundError("User not found");
         }
 
+        const isRequestPending = user.pendingRequests.filter(
+            (reqs) => reqs.friendId === requestId
+        )[0];
+        if (!isRequestPending) {
+            return errorServices.notFoundError("Request does not exist");
+        }
+
         // Create user entity
         const validUser = userFactory.create({
             firstname: user.firstname,
