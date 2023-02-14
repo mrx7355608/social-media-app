@@ -1,6 +1,15 @@
-import { IUser } from "@/core/interfaces/user.interfaces";
+import { IUser, IUserPendingRequest } from "@/core/interfaces/user.interfaces";
 import mongoose from "mongoose";
 
+const pendingRequestSchema = new mongoose.Schema<IUserPendingRequest>(
+    {
+        friendId: String,
+        fullname: String,
+        linkToProfile: String,
+        profilePicture: String,
+    },
+    { id: false, _id: false }
+);
 const userSchema = new mongoose.Schema<IUser>({
     firstname: {
         type: String,
@@ -23,7 +32,7 @@ const userSchema = new mongoose.Schema<IUser>({
         required: true,
     },
     pendingRequests: {
-        type: [String],
+        type: [pendingRequestSchema],
         required: true,
     },
     isEmailVerified: {
