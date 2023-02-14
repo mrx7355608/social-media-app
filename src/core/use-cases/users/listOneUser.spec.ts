@@ -4,11 +4,11 @@ import { ErrorServices } from "@/services/error.services";
 import { userDB } from "@/mocks/userDataSource";
 
 const errorServices = new ErrorServices();
-const listOneUser = listOneUserFactory({
-    userDataSource: userDB,
+const listOneUser = listOneUserFactory(
+    userDB,
     errorServices,
-    isMongoId: validator.isMongoId,
-});
+    validator.isMongoId
+);
 
 describe("List one user", function () {
     it("throws error when user id is missing", async function () {

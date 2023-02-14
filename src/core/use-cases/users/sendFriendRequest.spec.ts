@@ -5,11 +5,11 @@ import { IUserDBModel } from "@/core/interfaces/user.interfaces";
 import validator from "validator";
 
 const errorServices = new ErrorServices();
-const sendFriendReq = sendFriendRequestFactory({
-    userDataSource: userDB,
+const sendFriendReq = sendFriendRequestFactory(
+    userDB,
     errorServices,
-    isMongoId: validator.isMongoId,
-});
+    validator.isMongoId
+);
 
 describe("Send friend request", function () {
     let user1: IUserDBModel;

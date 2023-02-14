@@ -3,15 +3,11 @@ import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
 import { IUser, IUserDBModel } from "@/core/interfaces/user.interfaces";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 
-export function updateProfilePictureFactory({
-    userDataSource,
-    errorServices,
-    isValidUrl,
-}: {
-    userDataSource: IDataSource<IUserDBModel>;
-    errorServices: IErrorServices;
-    isValidUrl: (url: string) => boolean;
-}) {
+export function updateProfilePictureFactory(
+    userDataSource: IDataSource<IUserDBModel>,
+    errorServices: IErrorServices,
+    isValidUrl: (url: string) => boolean
+) {
     return async function (pictureUrl: string, userid: string) {
         if (!pictureUrl) {
             return errorServices.validationError("");

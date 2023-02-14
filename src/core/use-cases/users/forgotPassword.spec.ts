@@ -7,12 +7,12 @@ import { mockDbOperations } from "@/mocks/userDataSource";
 
 const emailServices = new MockEmailServices();
 const errorServices = new ErrorServices();
-const forgotPassword = forgotPasswordFactory({
-    userDataSource: userDB,
+const forgotPassword = forgotPasswordFactory(
+    userDB,
     errorServices,
     emailServices,
-    emailValidator: validator.isEmail,
-});
+    validator.isEmail
+);
 
 describe("Forgot Password", function () {
     it("throws error when account / email is not verified", async function () {

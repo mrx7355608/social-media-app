@@ -5,17 +5,12 @@ import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 import { IHashServices } from "@/services/interfaces/hashServices.interface";
 import { IJwtServices } from "@/services/interfaces/jwtServices.interface";
 
-export function resetPasswordFactory({
-    userDataSource,
-    errorServices,
-    jwtServices,
-    hashServices,
-}: {
-    userDataSource: IDataSource<IUserDBModel>;
-    errorServices: IErrorServices;
-    jwtServices: IJwtServices;
-    hashServices: IHashServices;
-}) {
+export function resetPasswordFactory(
+    userDataSource: IDataSource<IUserDBModel>,
+    errorServices: IErrorServices,
+    jwtServices: IJwtServices,
+    hashServices: IHashServices
+) {
     return async function ({
         token,
         password,

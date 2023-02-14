@@ -3,15 +3,11 @@ import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
 import { IUser, IUserDBModel } from "@/core/interfaces/user.interfaces";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 
-export function acceptRequestFactory({
-    userDataSource,
-    errorServices,
-    isMongoId,
-}: {
-    userDataSource: IDataSource<IUserDBModel>;
-    errorServices: IErrorServices;
-    isMongoId: (id: string) => boolean;
-}) {
+export function acceptRequestFactory(
+    userDataSource: IDataSource<IUserDBModel>,
+    errorServices: IErrorServices,
+    isMongoId: (id: string) => boolean
+) {
     return async function (requestId: string, userid: string) {
         // validate ids
         validateId(requestId, "Request");

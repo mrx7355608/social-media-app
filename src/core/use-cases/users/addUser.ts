@@ -5,17 +5,12 @@ import { IEmailServices } from "@/services/interfaces/emailServices.interface";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 import { IHashServices } from "@/services/interfaces/hashServices.interface";
 
-export function addUserFactory({
-    userDataSource,
-    errorServices,
-    hashServices,
-    emailServices,
-}: {
-    userDataSource: IDataSource<IUserDBModel>;
-    errorServices: IErrorServices;
-    hashServices: IHashServices;
-    emailServices: IEmailServices;
-}) {
+export function addUserFactory(
+    userDataSource: IDataSource<IUserDBModel>,
+    errorServices: IErrorServices,
+    hashServices: IHashServices,
+    emailServices: IEmailServices
+) {
     return async function (userData: IUser) {
         if (!userData || Object.keys(userData).length < 1) {
             return errorServices.validationError("User data is missing");

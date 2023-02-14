@@ -6,11 +6,7 @@ import { mockDbOperations } from "@/mocks/userDataSource";
 
 const errorServices = new ErrorServices();
 const jwtServices = new MockJwtServices();
-const verifyAccount = verifyAccountFactory({
-    userDataSource: userDB,
-    errorServices,
-    jwtServices,
-});
+const verifyAccount = verifyAccountFactory(userDB, errorServices, jwtServices);
 
 describe("Verify Account", function () {
     it("throws error on invalid token", async function () {

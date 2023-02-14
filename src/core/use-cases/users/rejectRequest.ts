@@ -3,15 +3,11 @@ import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
 import { IUser, IUserDBModel } from "@/core/interfaces/user.interfaces";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 
-export function rejectRequestFactory({
-    userDataSource,
-    errorServices,
-    isMongoId,
-}: {
-    userDataSource: IDataSource<IUserDBModel>;
-    errorServices: IErrorServices;
-    isMongoId: (id: string) => boolean;
-}) {
+export function rejectRequestFactory(
+    userDataSource: IDataSource<IUserDBModel>,
+    errorServices: IErrorServices,
+    isMongoId: (id: string) => boolean
+) {
     return async function (requestId: string, userid: string) {
         // validate ids
         validateId(requestId, "Request");
@@ -27,7 +23,7 @@ export function rejectRequestFactory({
             (reqs) => reqs.friendId === requestId
         )[0];
         if (!isRequestPending) {
-            return errorServices.notFoundError("Request does not exist");
+            return errorServices.notFoundError("Request not found");
         }
 
         // Create user entity

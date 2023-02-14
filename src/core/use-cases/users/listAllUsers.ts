@@ -2,14 +2,9 @@ import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
 import { IUserDBModel } from "@/core/interfaces/user.interfaces";
 import { IPaginationData } from "@/core/interfaces/data-source-generic.interface";
 
-export function listAllUsersFactory({
-    userDataSource,
-}: {
-    userDataSource: IDataSource<IUserDBModel>;
-}) {
+export function listAllUsersFactory(userDataSource: IDataSource<IUserDBModel>) {
     return async function ({ limit, page, sort }: IPaginationData) {
-        const newPaginationData = paginate({ limit, page, sort });
-        const users = await userDataSource.findAll(newPaginationData);
+        const users = await userDataSource.findAll({ limit, page, sort });
         return users;
     };
 

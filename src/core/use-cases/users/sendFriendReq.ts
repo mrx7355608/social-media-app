@@ -8,15 +8,11 @@ import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 import { userFactory } from "@/core/entities/index";
 import appConfig from "@/config/index";
 
-export function sendFriendRequestFactory({
-    userDataSource,
-    errorServices,
-    isMongoId,
-}: {
-    userDataSource: IDataSource<IUserDBModel>;
-    isMongoId: (str: string) => boolean;
-    errorServices: IErrorServices;
-}) {
+export function sendFriendRequestFactory(
+    userDataSource: IDataSource<IUserDBModel>,
+    errorServices: IErrorServices,
+    isMongoId: (str: string) => boolean
+) {
     return async function (receiver: string, sender: string) {
         // receiver => to whom request is sent
         // sender => one who is sending request

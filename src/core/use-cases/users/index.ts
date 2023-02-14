@@ -26,68 +26,62 @@ const emailServices = new EmailServices();
 const userDataSource = new UserDataSource();
 const isMongoId = validator.isMongoId;
 
-const listAllUsers = listAllUsersFactory({
-    userDataSource,
-});
-const listOneUser = listOneUserFactory({
+const listAllUsers = listAllUsersFactory(userDataSource);
+const listOneUser = listOneUserFactory(
     userDataSource,
     errorServices,
-    isMongoId,
-});
-const addUser = addUserFactory({
+    isMongoId
+);
+const addUser = addUserFactory(
     userDataSource,
     errorServices,
     hashServices,
-    emailServices,
-});
-const removeUser = removeUserFactory({
+    emailServices
+);
+const removeUser = removeUserFactory(userDataSource, errorServices, isMongoId);
+const verifyAccount = verifyAccountFactory(
     userDataSource,
     errorServices,
-    isMongoId,
-});
-const verifyAccount = verifyAccountFactory({
+    jwtServices
+);
+const forgotPassword = forgotPasswordFactory(
+    userDataSource,
+    errorServices,
+    emailServices,
+    validator.isEmail
+);
+const acceptRequest = acceptRequestFactory(
+    userDataSource,
+    errorServices,
+    isMongoId
+);
+const sendFriendReq = sendFriendRequestFactory(
+    userDataSource,
+    errorServices,
+    isMongoId
+);
+const rejectRequest = rejectRequestFactory(
+    userDataSource,
+    errorServices,
+    isMongoId
+);
+const updateProfilePicture = updateProfilePictureFactory(
+    userDataSource,
+    errorServices,
+    validator.isURL
+);
+const sendVerificationEmail = sendVerificationEmailFactory(
+    userDataSource,
+    errorServices,
+    emailServices,
+    validator.isEmail
+);
+const resetPassword = resetPasswordFactory(
     userDataSource,
     errorServices,
     jwtServices,
-});
-const forgotPassword = forgotPasswordFactory({
-    userDataSource,
-    errorServices,
-    emailServices,
-    emailValidator: validator.isEmail,
-});
-const acceptRequest = acceptRequestFactory({
-    userDataSource,
-    errorServices,
-    isMongoId,
-});
-const sendFriendReq = sendFriendRequestFactory({
-    userDataSource,
-    errorServices,
-    isMongoId,
-});
-const rejectRequest = rejectRequestFactory({
-    userDataSource,
-    errorServices,
-    isMongoId,
-});
-const updateProfilePicture = updateProfilePictureFactory({
-    userDataSource,
-    errorServices,
-    isValidUrl: validator.isURL,
-});
-const sendVerificationEmail = sendVerificationEmailFactory({
-    userDataSource,
-    errorServices,
-    emailServices,
-    emailValidator: validator.isEmail,
-});
-const resetPassword = resetPasswordFactory({
-    userDataSource,
-    errorServices,
-    hashServices,
-    jwtServices,
-});
+    hashServices
+);
 
 export const userServices = {
     listAllUsers,

@@ -101,7 +101,7 @@ describe("Testing User Routes", function () {
             const response = await agent
                 .patch(endpoint + "/reject/63eb0b2182ffced8317d8714")
                 .expect(404);
-            expect(response.body.error).toBe("Request does not exist");
+            expect(response.body.error).toBe("Request not found");
         });
         it.skip("rejects request", async function () {
             const response = await agent

@@ -8,12 +8,12 @@ import { MockEmailServices } from "@/mocks/emailServices";
 const emailServices = new MockEmailServices();
 const errorServices = new ErrorServices();
 const hashServices = new HashServices();
-const addUser = addUserFactory({
-    userDataSource: userDB,
+const addUser = addUserFactory(
+    userDB,
     errorServices,
     hashServices,
-    emailServices,
-});
+    emailServices
+);
 
 const data: IUser = {
     firstname: "test",

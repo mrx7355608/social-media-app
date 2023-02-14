@@ -3,17 +3,12 @@ import { IUserDBModel } from "@/core/interfaces/user.interfaces";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 import { IEmailServices } from "@/services/interfaces/emailServices.interface";
 
-export function sendVerificationEmailFactory({
-    userDataSource,
-    errorServices,
-    emailServices,
-    emailValidator,
-}: {
-    userDataSource: IDataSource<IUserDBModel>;
-    errorServices: IErrorServices;
-    emailServices: IEmailServices;
-    emailValidator: (str: string) => boolean;
-}) {
+export function sendVerificationEmailFactory(
+    userDataSource: IDataSource<IUserDBModel>,
+    errorServices: IErrorServices,
+    emailServices: IEmailServices,
+    emailValidator: (str: string) => boolean
+) {
     return async function (email: string) {
         if (!email) {
             return errorServices.validationError("Please enter your email");

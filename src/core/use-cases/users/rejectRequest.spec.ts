@@ -6,16 +6,16 @@ import { acceptRequestFactory } from "./acceptRequest";
 
 const errorServices = new ErrorServices();
 
-const acceptRequest = acceptRequestFactory({
-    userDataSource: userDB,
+const acceptRequest = acceptRequestFactory(
+    userDB,
     errorServices,
-    isMongoId: validator.isMongoId,
-});
-const rejectRequest = rejectRequestFactory({
-    userDataSource: userDB,
+    validator.isMongoId
+);
+const rejectRequest = rejectRequestFactory(
+    userDB,
     errorServices,
-    isMongoId: validator.isMongoId,
-});
+    validator.isMongoId
+);
 
 describe("Rejects friend request", function () {
     it("throws error when request id is invalid", async function () {

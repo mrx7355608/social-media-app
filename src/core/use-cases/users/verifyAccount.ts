@@ -4,15 +4,11 @@ import { IUserDBModel } from "@/core/interfaces/user.interfaces";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 import { IJwtServices } from "@/services/interfaces/jwtServices.interface";
 
-export function verifyAccountFactory({
-    userDataSource,
-    errorServices,
-    jwtServices,
-}: {
-    userDataSource: IDataSource<IUserDBModel>;
-    errorServices: IErrorServices;
-    jwtServices: IJwtServices;
-}) {
+export function verifyAccountFactory(
+    userDataSource: IDataSource<IUserDBModel>,
+    errorServices: IErrorServices,
+    jwtServices: IJwtServices
+) {
     return async function (token: string) {
         if (!token) {
             return errorServices.authenticationError("Auth Token is missing");
