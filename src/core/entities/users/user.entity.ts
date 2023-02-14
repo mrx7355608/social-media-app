@@ -6,17 +6,12 @@ import {
 } from "@/core/interfaces/user.interfaces";
 
 export class UserFactory {
-    private sanitize: (str: string) => string;
-    private detectSpecialChars: (str: string) => boolean;
-    private emailValidator: (email: string) => boolean;
-    private isValidUrl: (url: string) => boolean;
-
-    constructor({
-        sanitize,
-        detectSpecialChars,
-        emailValidator,
-        isValidUrl,
-    }: IUserEntityHelpers) {
+    constructor(
+        private sanitize: (str: string) => string,
+        private detectSpecialChars: (str: string) => boolean,
+        private emailValidator: (email: string) => boolean,
+        private isValidUrl: (url: string) => boolean
+    ) {
         this.sanitize = sanitize;
         this.emailValidator = emailValidator;
         this.detectSpecialChars = detectSpecialChars;

@@ -2,12 +2,12 @@ import { UserFactory } from "./users/user.entity";
 import sanitize from "sanitize-html";
 import validator from "validator";
 
-const userFactory = new UserFactory({
+const userFactory = new UserFactory(
     sanitize,
     detectSpecialChars,
-    emailValidator: validator.isEmail,
-    isValidUrl: validator.isURL,
-});
+    validator.isEmail,
+    validator.isURL
+);
 
 export { userFactory };
 
