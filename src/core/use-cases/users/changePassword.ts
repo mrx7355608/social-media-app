@@ -34,6 +34,11 @@ export function changePasswordFactory(
         if (!isValidPassword) {
             return errorServices.validationError("Old password is incorrect");
         }
+        if (newPassword === oldPassword) {
+            return errorServices.validationError(
+                "You cannot use your old password as new password"
+            );
+        }
 
         const validUser = userFactory.create({
             firstname: user.firstname,
