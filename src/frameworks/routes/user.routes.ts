@@ -21,9 +21,11 @@ userRouter.patch(
     "/me/pending-requests/reject/:id",
     makeRequest(userControllers.rejectRequest)
 );
+userRouter.get(
+    "/me/friends",
+    makeRequest(userControllers.getCurrentUserFriends)
+);
 // userRouter.get("/:id/photos");
 // userRouter.get("/:id/friends");
 // userRouter.post("/send-friend-request/:id");
-// userRouter.get("/me/photos");
-// userRouter.get("/me/friends");
 // userRouter.get("/me/pending-requests");

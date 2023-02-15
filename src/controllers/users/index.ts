@@ -4,6 +4,7 @@ import { sendRequestController } from "./post-send-request";
 import { acceptRequestController } from "./patch-accept-request";
 import { rejectRequestController } from "./patch-reject-request";
 import { getCurrentUserController } from "./get-current-user";
+import { getCurrentUserFriendsController } from "./get-current-user-friends";
 import { userServices } from "@/core/use-cases/users";
 
 export const userControllers = {
@@ -19,4 +20,5 @@ export const userControllers = {
         rejectReq: userServices.rejectRequest,
     }),
     getCurrentUser: getCurrentUserController(),
+    getCurrentUserFriends: getCurrentUserFriendsController(),
 };
