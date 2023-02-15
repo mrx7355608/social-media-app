@@ -9,18 +9,17 @@ export function getOneUserController({
     return async function (httpRequest: IHttpRequest) {
         try {
             const user = await listOneUser(httpRequest.params.id);
+            const fullname = createFullname(user.firstname, user.lastname);
+            const response = {
+                id: user._id,
+                fullname,
+                profilePicture: user.profilePicture,
+                friends: user.friends,
+            };
 
-            // Remove un-wanted fields
-            (user as any).password = undefined;
-            (user as any).email = undefined;
-            (user as any).__v = undefined;
-            (user as any).friends = undefined;
-            (user as any).photos = undefined;
-            (user as any).isEmailVerified = undefined;
-            (user as any).pendingRequests = undefined;
             return {
                 statusCode: 200,
-                body: user,
+                body: response,
             };
         } catch (err: any) {
             return {
@@ -29,4 +28,13 @@ export function getOneUserController({
             };
         }
     };
+
+    function createFullname(firstname: string, lastname: string): string {
+        // Capitalize first letter of the name
+        const fnameFirstCaps = firstname.substring(0, 1).toUpperCase();
+        const lnameFirstCaps = lastname.substring(0, 1).toUpperCase();
+        return `${fnameFirstCaps + firstname.substring(1)} ${
+            lnameFirstCaps + lastname.substring(1)
+        }`;
+    }
 }

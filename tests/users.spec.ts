@@ -68,7 +68,7 @@ describe("Testing User Routes", function () {
     });
 
     describe("Accepting requests", function () {
-        const endpoint = "/api/v1/users/pending-requests";
+        const endpoint = "/api/v1/users/me/pending-requests";
         it("returns error response if the request id is invalid", async function () {
             const response = await agent
                 .patch(endpoint + "/accept/invalid=idd")
@@ -90,7 +90,7 @@ describe("Testing User Routes", function () {
     });
 
     describe("Rejecting requests", function () {
-        const endpoint = "/api/v1/users/pending-requests";
+        const endpoint = "/api/v1/users/me/pending-requests";
         it("returns error response if the request id is invalid", async function () {
             const response = await agent
                 .patch(endpoint + "/reject/invalid=idd")

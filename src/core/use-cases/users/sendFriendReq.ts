@@ -111,7 +111,7 @@ export function sendFriendRequestFactory(
             friendId: user._id,
             fullname: `${capitalizedFname} ${capitalizedLname}`,
             profilePicture: "",
-            linkToProfile: `${appConfig.apiUrl}/users${user._id}`,
+            linkToProfile: `${appConfig.apiUrl}/users/${user._id}`,
         };
     }
 }
