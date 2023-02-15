@@ -10,7 +10,7 @@ const pendingRequestSchema = new mongoose.Schema<IUserPendingRequest>(
     },
     { id: false, _id: false }
 );
-const userSchema = new mongoose.Schema<IUser>({
+const userSchema = new mongoose.Schema({
     firstname: {
         type: String,
         required: true,

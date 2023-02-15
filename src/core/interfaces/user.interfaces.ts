@@ -8,7 +8,7 @@ export interface IUser {
     profilePicture: string;
     confirmPassword?: string;
     isEmailVerified: boolean;
-    friends: mongoose.Schema.Types.ObjectId[];
+    friends: string[];
     pendingRequests: IUserPendingRequest[];
 }
 export interface IUserDBModel extends IUser, mongoose.Document {
