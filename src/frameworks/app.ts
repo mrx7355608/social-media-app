@@ -42,7 +42,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 passportSetup(passport);
 
-app.use(express.json({ limit: "10kb" }));
+app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/v1/users", userRouter);

@@ -4,5 +4,6 @@ export interface IHttpRequest {
     params: any;
     body: any;
     query: any;
+    file: any;
     user: IUserDBModel;
 }

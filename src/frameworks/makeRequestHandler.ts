@@ -9,6 +9,7 @@ export function makeRequest(
             body: req.body,
             params: req.params,
             query: req.query,
+            file: req.file,
             user: (req as any).user,
         };
         controller(httpRequest)

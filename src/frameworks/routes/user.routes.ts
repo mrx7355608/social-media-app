@@ -2,6 +2,8 @@ import { Router } from "express";
 import { userControllers } from "@/controllers/users/index";
 import { makeRequest } from "../makeRequestHandler";
 import isAuth from "../middlewares/isAuth";
+import multer from "multer";
+const upload = multer({ storage: multer.memoryStorage() });
 
 export const userRouter = Router();
 
@@ -24,6 +26,11 @@ userRouter.patch(
 userRouter.patch(
     "/me/change-password",
     makeRequest(userControllers.changePassword)
+);
+userRouter.patch(
+    "/me/change-picture",
+    upload.single("profilePicture"),
+    makeRequest(userControllers.changePicture)
 );
 userRouter.get(
     "/me/friends",

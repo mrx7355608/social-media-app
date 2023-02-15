@@ -10,10 +10,10 @@ export function updateProfilePictureFactory(
 ) {
     return async function (pictureUrl: string, userid: string) {
         if (!pictureUrl) {
-            return errorServices.validationError("");
+            return errorServices.internalServerError();
         }
         if (!isValidUrl(pictureUrl)) {
-            return errorServices.validationError("");
+            return errorServices.internalServerError();
         }
 
         const user = await userDataSource.findById(userid);
@@ -21,13 +21,23 @@ export function updateProfilePictureFactory(
             return errorServices.notFoundError("User does not exist");
         }
 
-        const validUser = userFactory.create(user);
+        const validUser = userFactory.create({
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            password: user.password,
+            confirmPassword: user.password,
+            friends: user.friends,
+            pendingRequests: user.pendingRequests,
+            profilePicture: user.profilePicture,
+            isEmailVerified: user.isEmailVerified,
+        });
         validUser.updateProfilePicture(pictureUrl);
 
         return await userDataSource.update<IUser>(userid, {
             firstname: validUser.firstname,
             lastname: validUser.lastname,
-            email: validUser.lastname,
+            email: validUser.email,
             password: validUser.password,
             isEmailVerified: validUser.isEmailVerified,
             profilePicture: validUser.profilePicture,
