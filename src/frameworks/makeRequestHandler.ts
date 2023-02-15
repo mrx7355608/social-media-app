@@ -16,6 +16,7 @@ export function makeRequest(
                 return res.status(response.statusCode).json(response.body);
             })
             .catch((err: any) => {
+                console.log(err.message);
                 return res.status(500).json({ error: "Something went wrong" });
             });
     };
