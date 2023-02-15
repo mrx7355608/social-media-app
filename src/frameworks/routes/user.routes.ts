@@ -21,6 +21,10 @@ userRouter.patch(
     "/me/pending-requests/reject/:id",
     makeRequest(userControllers.rejectRequest)
 );
+userRouter.patch(
+    "/me/change-password",
+    makeRequest(userControllers.changePassword)
+);
 userRouter.get(
     "/me/friends",
     makeRequest(userControllers.getCurrentUserFriends)

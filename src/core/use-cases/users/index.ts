@@ -10,6 +10,7 @@ import { rejectRequestFactory } from "./rejectRequest";
 import { updateProfilePictureFactory } from "./updateProfilePicture";
 import { sendVerificationEmailFactory } from "./sendVerificationEmail";
 import { resetPasswordFactory } from "./resetPassword";
+import { changePasswordFactory } from "./changePassword";
 
 // Services and other helper functions
 import { ErrorServices } from "@/services/error.services";
@@ -82,6 +83,12 @@ const resetPassword = resetPasswordFactory(
     jwtServices,
     hashServices
 );
+const changePassword = changePasswordFactory(
+    userDataSource,
+    errorServices,
+    hashServices,
+    isMongoId
+);
 
 export const userServices = {
     listAllUsers,
@@ -96,4 +103,5 @@ export const userServices = {
     updateProfilePicture,
     sendVerificationEmail,
     resetPassword,
+    changePassword,
 };
