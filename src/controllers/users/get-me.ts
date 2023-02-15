@@ -11,7 +11,6 @@ export function getCurrentUserController() {
             id: currentUser._id,
             fullname,
             profilePicture: currentUser.profilePicture,
-            friends: currentUser.friends,
             pendingRequests: currentUser.pendingRequests,
         };
 

@@ -13,7 +13,7 @@ export function changePasswordController({
 }) {
     return async function (httpRequest: IHttpRequest) {
         try {
-            const userid = httpRequest.user._id;
+            const userid = String(httpRequest.user._id);
             const oldPassword = httpRequest.body.oldPassword;
             const newPassword = httpRequest.body.newPassword;
             const confirmNewPassword = httpRequest.body.confirmNewPassword;
@@ -29,6 +29,7 @@ export function changePasswordController({
                 body: { message: "Password changed successfully!" },
             };
         } catch (err: any) {
+            console.log(err);
             return {
                 statusCode: err.statusCode || 400,
                 body: { error: err.message },
