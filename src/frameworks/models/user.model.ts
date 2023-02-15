@@ -28,7 +28,8 @@ const userSchema = new mongoose.Schema<IUser>({
         required: true,
     },
     friends: {
-        type: [String],
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "User",
         required: true,
     },
     pendingRequests: {
