@@ -19,6 +19,7 @@ import { JwtServices } from "@/services/jwt.services";
 import { EmailServices } from "@/services/email.services";
 import { UserDataSource } from "@/data/user.data";
 import validator from "validator";
+import { searchUsersFactory } from "./searchUsers";
 
 const errorServices = new ErrorServices();
 const hashServices = new HashServices();
@@ -89,6 +90,7 @@ const changePassword = changePasswordFactory(
     hashServices,
     isMongoId
 );
+const searchUsers = searchUsersFactory(userDataSource);
 
 export const userServices = {
     listAllUsers,
@@ -104,4 +106,5 @@ export const userServices = {
     sendVerificationEmail,
     resetPassword,
     changePassword,
+    searchUsers,
 };

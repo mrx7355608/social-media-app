@@ -10,6 +10,7 @@ import { changePictureController } from "./patch-profile-picture";
 
 import { userServices } from "@/core/use-cases/users";
 import { ImageServices } from "@/services/image.services";
+import { postSearchController } from "./post-search-users";
 
 export const userControllers = {
     getOneUser: getOneUserController({ listOneUser: userServices.listOneUser }),
@@ -32,4 +33,7 @@ export const userControllers = {
     }),
     getCurrentUser: getCurrentUserController(),
     getCurrentUserFriends: getCurrentUserFriendsController(),
+    search: postSearchController({
+        searchUsers: userServices.searchUsers,
+    }),
 };

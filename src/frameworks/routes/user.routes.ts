@@ -10,6 +10,7 @@ export const userRouter = Router();
 userRouter.use(isAuth);
 userRouter.get("/", makeRequest(userControllers.getUsers));
 userRouter.get("/me", makeRequest(userControllers.getCurrentUser));
+userRouter.get("/search", makeRequest(userControllers.search));
 userRouter.get("/:id", makeRequest(userControllers.getOneUser));
 userRouter.post(
     "/send-friend-request/:id",
