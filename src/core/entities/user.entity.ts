@@ -33,17 +33,16 @@ export class UserFactory {
         const validFirstname = this.sanitize(userData.firstname);
         const validLastname = this.sanitize(userData.lastname);
 
-        // TODO: remove confirmPassword field
-        return new User({
-            firstname: validFirstname,
-            lastname: validLastname,
-            email: userData.email,
-            password: userData.password,
-            profilePicture: userData.profilePicture,
-            isEmailVerified: userData.isEmailVerified,
-            friends: userData.friends,
-            pendingRequests: userData.pendingRequests,
-        });
+        return new User(
+            validFirstname,
+            validLastname,
+            userData.email,
+            userData.password,
+            userData.profilePicture,
+            userData.isEmailVerified,
+            userData.friends,
+            userData.pendingRequests
+        );
     }
 
     private validateName(name: string, label: string): void {
@@ -128,25 +127,16 @@ export class UserFactory {
 }
 
 class User implements IUserEntity {
-    firstname: string;
-    lastname: string;
-    email: string;
-    password: string;
-    isEmailVerified: boolean;
-    profilePicture: string;
-    friends: string[];
-    pendingRequests: IUserPendingRequest[];
-
-    constructor({
-        firstname,
-        lastname,
-        email,
-        password,
-        friends,
-        pendingRequests,
-        profilePicture,
-        isEmailVerified,
-    }: IUser) {
+    constructor(
+        public firstname: string,
+        public lastname: string,
+        public email: string,
+        public password: string,
+        public profilePicture: string,
+        public isEmailVerified: boolean,
+        public friends: string[],
+        public pendingRequests: IUserPendingRequest[]
+    ) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;

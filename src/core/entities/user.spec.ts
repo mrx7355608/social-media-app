@@ -1,4 +1,4 @@
-import { userFactory } from "../index";
+import { userFactory } from "./index";
 import { IUser } from "@/core/interfaces/user.interfaces";
 
 const data: IUser = {
