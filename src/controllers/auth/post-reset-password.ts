@@ -23,12 +23,6 @@ export function resetPasswordController({
                     body: { error: "Auth token is missing" },
                 };
 
-            if (typeof token !== "string")
-                return {
-                    statusCode: 400,
-                    body: { error: "Auth token should be a text" },
-                };
-
             const password: string = httpRequest.body.password;
             const confirmPassword: string = httpRequest.body.confirmPassword;
             await resetPassword({

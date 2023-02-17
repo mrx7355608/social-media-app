@@ -15,12 +15,6 @@ export function verifyAccountController({
                     body: { error: "Auth token is missing" },
                 };
 
-            if (typeof token !== "string")
-                return {
-                    statusCode: 400,
-                    body: { error: "Auth token should be a text" },
-                };
-
             await verifyAccount(token);
             return {
                 statusCode: 200,
