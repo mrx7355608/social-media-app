@@ -8,6 +8,7 @@ export function verifyAccountController({
 }) {
     return async function (httpRequest: IHttpRequest) {
         try {
+            // TODO: invalidate token after it has been used
             const token: string = httpRequest.query.token;
             if (!token)
                 return {

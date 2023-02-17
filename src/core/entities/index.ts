@@ -1,4 +1,4 @@
-import { UserFactory } from "./users/user.entity";
+import { UserFactory } from "./user.entity";
 import sanitize from "sanitize-html";
 import validator from "validator";
 
