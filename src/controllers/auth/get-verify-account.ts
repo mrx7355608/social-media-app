@@ -9,6 +9,18 @@ export function verifyAccountController({
     return async function (httpRequest: IHttpRequest) {
         try {
             const token: string = httpRequest.query.token;
+            if (!token)
+                return {
+                    statusCode: 400,
+                    body: { error: "Auth token is missing" },
+                };
+
+            if (typeof token !== "string")
+                return {
+                    statusCode: 400,
+                    body: { error: "Auth token should be a text" },
+                };
+
             await verifyAccount(token);
             return {
                 statusCode: 200,

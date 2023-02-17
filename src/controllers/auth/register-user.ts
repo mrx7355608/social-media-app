@@ -9,7 +9,13 @@ export function postRegisterUserController({
     return async function (httpRequset: IHttpRequest) {
         try {
             const userInput = httpRequset.body;
-            // TODO: fix user profile picture
+            if (!userInput || Object.keys(userInput).length < 1) {
+                return {
+                    statusCode: 400,
+                    body: { error: "User data is missing" },
+                };
+            }
+
             const newUserData: IUser = {
                 firstname: userInput.firstname,
                 lastname: userInput.lastname,
@@ -17,7 +23,7 @@ export function postRegisterUserController({
                 password: userInput.password,
                 confirmPassword: userInput.confirmPassword,
                 profilePicture:
-                    "https://www.cloudinary.com/images/default_user.png",
+                    "https://res.cloudinary.com/doemiclic/image/upload/v1676605199/user_d4gype.png",
                 friends: [],
                 pendingRequests: [],
                 isEmailVerified: false,

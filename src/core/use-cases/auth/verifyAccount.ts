@@ -10,10 +10,6 @@ export function verifyAccountFactory(
     jwtServices: IJwtServices
 ) {
     return async function (token: string) {
-        if (!token) {
-            return errorServices.authenticationError("Auth Token is missing");
-        }
-
         const payload = jwtServices.verify(token);
         if (!payload) {
             return errorServices.authenticationError(

@@ -21,12 +21,6 @@ export function resetPasswordFactory(
         confirmPassword: string;
     }) {
         // Verify token
-        if (!token) {
-            return errorServices.authenticationError("Auth token is missing");
-        }
-        if (typeof token !== "string") {
-            return errorServices.validationError("Auth token should be a text");
-        }
         const payload = jwtServices.verify(token);
         if (!payload) {
             return errorServices.authenticationError(

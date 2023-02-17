@@ -10,10 +10,6 @@ export function forgotPasswordFactory(
     emailValidator: (str: string) => boolean
 ) {
     return async function (email: string) {
-        if (!email) {
-            return errorServices.validationError("Please enter your email");
-        }
-
         if (!emailValidator(email)) {
             return errorServices.validationError("Invalid email");
         }

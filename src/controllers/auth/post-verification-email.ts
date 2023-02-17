@@ -9,6 +9,11 @@ export function postVerificationEmail({
     return async function (httpRequest: IHttpRequest) {
         try {
             const email = httpRequest.body.email;
+            if (!email)
+                return {
+                    statusCode: 400,
+                    body: { error: "Please enter your email" },
+                };
             const user = await sendVerificationEmail(email);
             const message = `A verification email has been sent to ${user.email}`;
             return {

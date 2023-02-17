@@ -12,23 +12,21 @@ export function addUserFactory(
     emailServices: IEmailServices
 ) {
     return async function (userData: IUser) {
-        if (!userData || Object.keys(userData).length < 1) {
-            return errorServices.validationError("User data is missing");
-        }
+        // Vaidate user data and create a new user
+        const validUser = userFactory.create(userData);
 
+        // Check if the user exists
         const userExists = await userDataSource.findOne({
             email: userData.email,
         });
-
         if (userExists) {
             return errorServices.validationError("User already exists");
         }
 
-        // Create a new user
-        const validUser = userFactory.create(userData);
+        // Hash user password
         const hashedPassword = await hashServices.hash(validUser.password);
 
-        // Send a verification email
+        // Add user in db
         const newUser = await userDataSource.insert<IUser>({
             firstname: validUser.firstname,
             lastname: validUser.lastname,
@@ -40,6 +38,7 @@ export function addUserFactory(
             pendingRequests: validUser.pendingRequests,
         });
 
+        // Add user to database
         await emailServices.sendAccountVerificationEmail(
             newUser._id,
             newUser.email

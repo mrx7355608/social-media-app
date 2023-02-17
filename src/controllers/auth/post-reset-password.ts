@@ -17,6 +17,18 @@ export function resetPasswordController({
     return async function (httpRequest: IHttpRequest) {
         try {
             const token: string = httpRequest.query.token;
+            if (!token)
+                return {
+                    statusCode: 400,
+                    body: { error: "Auth token is missing" },
+                };
+
+            if (typeof token !== "string")
+                return {
+                    statusCode: 400,
+                    body: { error: "Auth token should be a text" },
+                };
+
             const password: string = httpRequest.body.password;
             const confirmPassword: string = httpRequest.body.confirmPassword;
             await resetPassword({
@@ -24,6 +36,7 @@ export function resetPasswordController({
                 password,
                 confirmPassword,
             });
+
             return {
                 statusCode: 200,
                 body: { message: "Password has been reset successfully!" },

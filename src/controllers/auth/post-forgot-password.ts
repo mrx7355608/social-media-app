@@ -9,6 +9,12 @@ export function forgotPasswordController({
     return async function (httpRequest: IHttpRequest) {
         try {
             const email = httpRequest.body.email;
+            if (!email)
+                return {
+                    statusCode: 400,
+                    body: { error: "Please enter your email" },
+                };
+
             const user = await forgotPassword(email);
             const message = `A password reset email has been sent to ${user.email}`;
             return {

@@ -94,4 +94,13 @@ describe("Testing Auth Routes", function () {
             );
         });
     });
+    describe("Signup", function () {
+        it("throws error when creds are not provided", async function () {
+            const response = await agent
+                .post("/api/v1/auth/signup")
+                .send()
+                .expect(400);
+            expect(response.body.error).toBe("User data is missing");
+        });
+    });
 });
