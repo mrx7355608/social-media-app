@@ -1,5 +1,5 @@
 import { postRegisterUserController } from "./register-user";
-import { userServices } from "@/core/use-cases/users";
+import { authServices } from "@/core/use-cases/auth";
 import { verifyAccountController } from "./get-verify-account";
 import { postVerificationEmail as resendVerificationEmailController } from "./post-verification-email";
 import { forgotPasswordController } from "./post-forgot-password";
@@ -10,19 +10,19 @@ import { resetPasswordController } from "./post-reset-password";
 const login = loginController();
 const logout = logoutController();
 const registerUser = postRegisterUserController({
-    addUser: userServices.addUser,
+    addUser: authServices.addUser,
 });
 const verifyAccount = verifyAccountController({
-    verifyAccount: userServices.verifyAccount,
+    verifyAccount: authServices.verifyAccount,
 });
 const resendAccountVerificationEmail = resendVerificationEmailController({
-    sendVerificationEmail: userServices.sendVerificationEmail,
+    sendVerificationEmail: authServices.sendVerificationEmail,
 });
 const forgotPassword = forgotPasswordController({
-    forgotPassword: userServices.forgotPassword,
+    forgotPassword: authServices.forgotPassword,
 });
 const resetPassword = resetPasswordController({
-    resetPassword: userServices.resetPassword,
+    resetPassword: authServices.resetPassword,
 });
 
 export const authController = {

@@ -1,31 +1,23 @@
 import { listAllUsersFactory } from "./listAllUsers";
 import { listOneUserFactory } from "./listOneUser";
-import { addUserFactory } from "./addUser";
 import { removeUserFactory } from "./removeUser";
-import { verifyAccountFactory } from "./verifyAccount";
-import { forgotPasswordFactory } from "./forgotPassword";
 import { sendFriendRequestFactory } from "./sendFriendReq";
 import { acceptRequestFactory } from "./acceptRequest";
 import { rejectRequestFactory } from "./rejectRequest";
 import { updateProfilePictureFactory } from "./updateProfilePicture";
-import { sendVerificationEmailFactory } from "./sendVerificationEmail";
-import { resetPasswordFactory } from "./resetPassword";
 import { changePasswordFactory } from "./changePassword";
+import { searchUsersFactory } from "./searchUsers";
+import { removeFriendFactory } from "./removeFriend";
 
 // Services and other helper functions
 import { ErrorServices } from "@/services/error.services";
 import { HashServices } from "@/services/hash.services";
-import { JwtServices } from "@/services/jwt.services";
-import { EmailServices } from "@/services/email.services";
+
 import { UserDataSource } from "@/data/user.data";
 import validator from "validator";
-import { searchUsersFactory } from "./searchUsers";
-import { removeFriendFactory } from "./removeFriend";
 
 const errorServices = new ErrorServices();
 const hashServices = new HashServices();
-const jwtServices = new JwtServices();
-const emailServices = new EmailServices();
 const userDataSource = new UserDataSource();
 const isMongoId = validator.isMongoId;
 
@@ -35,24 +27,9 @@ const listOneUser = listOneUserFactory(
     errorServices,
     isMongoId
 );
-const addUser = addUserFactory(
-    userDataSource,
-    errorServices,
-    hashServices,
-    emailServices
-);
+
 const removeUser = removeUserFactory(userDataSource, errorServices, isMongoId);
-const verifyAccount = verifyAccountFactory(
-    userDataSource,
-    errorServices,
-    jwtServices
-);
-const forgotPassword = forgotPasswordFactory(
-    userDataSource,
-    errorServices,
-    emailServices,
-    validator.isEmail
-);
+
 const acceptRequest = acceptRequestFactory(
     userDataSource,
     errorServices,
@@ -73,18 +50,7 @@ const updateProfilePicture = updateProfilePictureFactory(
     errorServices,
     validator.isURL
 );
-const sendVerificationEmail = sendVerificationEmailFactory(
-    userDataSource,
-    errorServices,
-    emailServices,
-    validator.isEmail
-);
-const resetPassword = resetPasswordFactory(
-    userDataSource,
-    errorServices,
-    jwtServices,
-    hashServices
-);
+
 const changePassword = changePasswordFactory(
     userDataSource,
     errorServices,
@@ -101,16 +67,11 @@ const removeFriend = removeFriendFactory(
 export const userServices = {
     listAllUsers,
     listOneUser,
-    addUser,
     removeUser,
-    verifyAccount,
-    forgotPassword,
     acceptRequest,
     rejectRequest,
     sendFriendReq,
     updateProfilePicture,
-    sendVerificationEmail,
-    resetPassword,
     changePassword,
     searchUsers,
     removeFriend,
