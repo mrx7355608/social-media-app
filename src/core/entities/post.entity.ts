@@ -1,11 +1,40 @@
 import { IAuthor, IPost } from "./post.interfaces";
 
 export class PostFactory {
-    // TODO: add validation methods
+    constructor(private sanitize: (str: string) => string) {
+        this.sanitize = sanitize;
+    }
 
     create(postData: IPost) {
+        const { body, author, likes, comments } = postData;
+
+        // Validations
+        if (!body) {
+            throw new Error("Post body is missing");
+        }
+        if (this.sanitize(body).length < 10) {
+            throw new Error("Post body should be 10 characters at least");
+        }
+        if (!author) {
+            throw new Error("Post author is missing");
+        }
+        if (!likes) {
+            throw new Error("Post likes are missing");
+        }
+        if (!likes.every((elem) => typeof elem === "string")) {
+            throw new Error("Post likes contain one or more invalid values");
+        }
+        if (!comments) {
+            throw new Error("Post comments are missing");
+        }
+        if (!comments.every((elem) => typeof elem === "string")) {
+            throw new Error("Post comments contain one or more invalid values");
+        }
+
+        const sanitizedBody = this.sanitize(body);
+
         return new Post(
-            postData.body,
+            sanitizedBody,
             postData.likes,
             postData.comments,
             postData.author
