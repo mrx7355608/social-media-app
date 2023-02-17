@@ -20,6 +20,7 @@ import { EmailServices } from "@/services/email.services";
 import { UserDataSource } from "@/data/user.data";
 import validator from "validator";
 import { searchUsersFactory } from "./searchUsers";
+import { removeFriendFactory } from "./removeFriend";
 
 const errorServices = new ErrorServices();
 const hashServices = new HashServices();
@@ -91,6 +92,11 @@ const changePassword = changePasswordFactory(
     isMongoId
 );
 const searchUsers = searchUsersFactory(userDataSource);
+const removeFriend = removeFriendFactory(
+    userDataSource,
+    errorServices,
+    isMongoId
+);
 
 export const userServices = {
     listAllUsers,
@@ -107,4 +113,5 @@ export const userServices = {
     resetPassword,
     changePassword,
     searchUsers,
+    removeFriend,
 };

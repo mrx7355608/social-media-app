@@ -175,7 +175,7 @@ class User implements IUserEntity {
     }
 
     removeFriend(friendId: string): void {
-        this.friends = this.friends.filter((id) => id !== friendId);
+        this.friends = this.friends.filter((id) => String(id) !== friendId);
     }
 
     cancelRequest(friendId: string): void {

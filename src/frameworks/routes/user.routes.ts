@@ -37,6 +37,10 @@ userRouter.get(
     "/me/friends",
     makeRequest(userControllers.getCurrentUserFriends)
 );
+userRouter.patch(
+    "/me/remove-friend/:id",
+    makeRequest(userControllers.removeUserFriend)
+);
 // userRouter.get("/:id/photos");
 // userRouter.get("/:id/friends");
 // userRouter.post("/send-friend-request/:id");

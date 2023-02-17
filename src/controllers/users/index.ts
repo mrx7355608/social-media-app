@@ -7,10 +7,10 @@ import { getCurrentUserController } from "./get-me";
 import { getCurrentUserFriendsController } from "./get-my-friends";
 import { changePasswordController } from "./patch-change-password";
 import { changePictureController } from "./patch-profile-picture";
-
+import { removeFriendController } from "./patch-remove-friend";
+import { postSearchController } from "./post-search-users";
 import { userServices } from "@/core/use-cases/users";
 import { ImageServices } from "@/services/image.services";
-import { postSearchController } from "./post-search-users";
 
 export const userControllers = {
     getOneUser: getOneUserController({ listOneUser: userServices.listOneUser }),
@@ -35,5 +35,8 @@ export const userControllers = {
     getCurrentUserFriends: getCurrentUserFriendsController(),
     search: postSearchController({
         searchUsers: userServices.searchUsers,
+    }),
+    removeUserFriend: removeFriendController({
+        removeFriend: userServices.removeFriend,
     }),
 };
