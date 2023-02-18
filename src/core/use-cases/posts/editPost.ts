@@ -8,24 +8,28 @@ export function editPostFactory(
     errorServices: IErrorServices,
     isMongoId: (id: string) => boolean
 ) {
-    return async function (postId: string, changes: Object) {
+    return async function (postId: string, userId: string, changes: Object) {
+        // Validate Post Id
         if (!isMongoId(postId)) {
             return errorServices.invalidIdError("Post Id is invalid");
         }
 
+        // Check if post exists
         const postExists = await postDataSource.findById(postId);
         if (!postExists) {
             return errorServices.notFoundError("Post not found");
         }
 
+        // Check if the user owns the post
+        if (postExists.author.authorId !== userId) {
+            return errorServices.forbiddenError("You do not own this post");
+        }
+
         const newPostData = Object.assign(postExists, changes);
         const validPost = postFactory.create(newPostData);
 
-        return await postDataSource.update<IPost>(postId, {
-            author: validPost.author,
+        return await postDataSource.update<any>(postId, {
             body: validPost.body,
-            likes: validPost.likes,
-            comments: validPost.comments,
         });
     };
 }

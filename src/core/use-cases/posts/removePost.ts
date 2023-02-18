@@ -7,7 +7,7 @@ export function removePostFactory(
     errorServices: IErrorServices,
     isMongoId: (id: string) => boolean
 ) {
-    return async function (postId: string) {
+    return async function (postId: string, userId: string) {
         if (!isMongoId(postId)) {
             return errorServices.invalidIdError("Post Id is invalid");
         }
@@ -15,6 +15,11 @@ export function removePostFactory(
         const postExists = await postDataSource.findById(postId);
         if (!postExists) {
             return errorServices.notFoundError("Post not found");
+        }
+
+        // Check if the user owns the post
+        if (postExists.author.authorId !== userId) {
+            return errorServices.forbiddenError("You do not own this post");
         }
 
         return await postDataSource.deleteData(postId);

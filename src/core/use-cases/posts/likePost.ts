@@ -24,7 +24,14 @@ export function likePostFactory(
             likes: post.likes,
             comments: post.comments,
         });
-        validPost.addLike(userId);
+
+        // If the post is already liked then, unlike it / remove like
+        if (post.likes.includes(userId)) {
+            validPost.removeLike(userId);
+        } else {
+            // Otherwise like the post
+            validPost.addLike(userId);
+        }
 
         return await postDataSource.update(postId, {
             author: validPost.author,

@@ -3,8 +3,8 @@ import { Document } from "mongoose";
 export interface IPost {
     author: IAuthor;
     body: string;
-    likes: [] | string[];
-    comments: [] | string[];
+    likes: string[];
+    comments: string[];
 }
 
 export interface IPostDBModel extends IPost, Document {
