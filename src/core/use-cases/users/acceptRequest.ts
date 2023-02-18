@@ -8,9 +8,9 @@ export function acceptRequestFactory(
     errorServices: IErrorServices,
     isMongoId: (id: string) => boolean
 ) {
-    return async function (requestId: string, userid: string) {
+    return async function (friendId: string, userid: string) {
         // validate ids
-        validateId(requestId, "Request");
+        validateId(friendId, "Request");
         validateId(userid, "User");
 
         // fetch user
@@ -20,10 +20,15 @@ export function acceptRequestFactory(
         }
 
         const isRequestPending = user.pendingRequests.filter(
-            (reqs) => reqs.friendId === requestId
+            (reqs) => reqs.friendId === friendId
         )[0];
         if (!isRequestPending) {
             return errorServices.notFoundError("Request does not exist");
+        }
+
+        const friend = await userDataSource.findById(friendId);
+        if (!friend) {
+            return errorServices.notFoundError("Friend not found");
         }
 
         // Create user entity
@@ -38,7 +43,36 @@ export function acceptRequestFactory(
             profilePicture: user.profilePicture,
             pendingRequests: user.pendingRequests,
         });
-        validUser.acceptRequest(requestId);
+
+        // create friend entity
+        const validFriend = userFactory.create({
+            firstname: friend.firstname,
+            lastname: friend.lastname,
+            email: friend.email,
+            password: friend.password,
+            confirmPassword: friend.password,
+            isEmailVerified: friend.isEmailVerified,
+            friends: friend.friends,
+            profilePicture: friend.profilePicture,
+            pendingRequests: friend.pendingRequests,
+        });
+
+        // add friend in my friend list
+        validUser.acceptRequest(friendId);
+
+        // add me in friend's friend list
+        validFriend.acceptRequest(userid);
+
+        await userDataSource.update<IUser>(friendId, {
+            firstname: validFriend.firstname,
+            lastname: validFriend.lastname,
+            email: validFriend.email,
+            password: validFriend.password,
+            isEmailVerified: validFriend.isEmailVerified,
+            profilePicture: validFriend.profilePicture,
+            friends: validFriend.friends,
+            pendingRequests: validFriend.pendingRequests,
+        });
 
         return await userDataSource.update<IUser>(userid, {
             firstname: validUser.firstname,

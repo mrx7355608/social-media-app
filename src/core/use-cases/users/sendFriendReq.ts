@@ -14,6 +14,7 @@ export function sendFriendRequestFactory(
     isMongoId: (str: string) => boolean
 ) {
     return async function (receiver: string, sender: string) {
+        // TODO: refactor this stupid code!
         // receiver => to whom request is sent
         // sender => one who is sending request
 
@@ -25,6 +26,12 @@ export function sendFriendRequestFactory(
 
         const friend = await validateAndFetch(receiver, "Friend");
         const user = await validateAndFetch(sender, "User");
+
+        if (user.friends.includes(receiver)) {
+            return errorServices.validationError(
+                "User is already your friend, request cannot be sent again"
+            );
+        }
 
         // check if the user has sent request before
         const alreadyPendingRequest = friend.pendingRequests.filter(
