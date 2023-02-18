@@ -9,9 +9,9 @@ import { removeCommentFromPostFactory } from "./removeCommentFromPost";
 
 import { ErrorServices } from "@/services/error.services";
 import validator from "validator";
+import { PostDataSource } from "@/data/post.data";
 
-// TODO: create a post data source
-const postDataSource = {} as any;
+const postDataSource = new PostDataSource();
 const errorServices = new ErrorServices();
 const isMongoId = validator.isMongoId;
 
