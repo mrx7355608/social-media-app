@@ -11,6 +11,7 @@ import connectMongo from "connect-mongodb-session";
 // Routers
 import { userRouter } from "./routes/user.routes";
 import { authRouter } from "./routes/auth.routes";
+import { postRouter } from "./routes/post.routes";
 import passportSetup from "./passport-setup";
 
 export const app: Application = express();
@@ -47,3 +48,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/posts", postRouter);
+
+// TODO: add 404 not found handler
+// TODO: add custom error handler that returns 500 "Something went wrong" onlt
