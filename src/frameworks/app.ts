@@ -19,7 +19,12 @@ export const app: Application = express();
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(hpp());
-app.use(cors());
+app.use(
+    cors({
+        origin: appConfig.clientUrl,
+        credentials: true,
+    })
+);
 
 // Express session
 const Store = connectMongo(session);

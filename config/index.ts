@@ -3,6 +3,7 @@ export default {
     port: process.env.PORT as string,
     databaseUrl: process.env.DATABASE_URL as string,
     apiUrl: process.env.API_URL as string,
+    clientUrl: process.env.CLIENT_URL as string,
 
     // Nodemailer
     emailUser: process.env.EMAIL_USER as string,
