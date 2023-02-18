@@ -13,6 +13,7 @@ export interface IPostDBModel extends IPost, Document {
 }
 
 export interface IAuthor {
+    authorId: string;
     fullname: string;
     profilePicture: string;
     linkToProfile: string;
