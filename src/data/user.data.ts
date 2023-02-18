@@ -25,13 +25,9 @@ export class UserDataSource implements IDataSource<IUserDBModel> {
     }
 
     async update<Y>(id: string, data: Y): Promise<IUserDBModel> {
-        const user = await UserModel.findByIdAndUpdate<IUser>(
-            id,
-            data as IUser,
-            {
-                new: true,
-            }
-        );
+        const user = await UserModel.findByIdAndUpdate(id, data as IUser, {
+            new: true,
+        });
         return user as IUserDBModel;
     }
 
