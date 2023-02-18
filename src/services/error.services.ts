@@ -21,4 +21,8 @@ export class ErrorServices implements IErrorServices {
     authenticationError(message: string): never {
         throw new AppError(message, 401);
     }
+
+    forbiddenError(message: string): never {
+        throw new AppError(message, 403);
+    }
 }
