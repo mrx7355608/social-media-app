@@ -1,24 +1,6 @@
 import { IPost } from "@/core/entities/post.interfaces";
+import { authorSchema } from "./author.model";
 import mongoose from "mongoose";
-
-const authorSchema = new mongoose.Schema({
-    fullname: String,
-    linkToProfile: String,
-    profilePicture: String,
-});
-
-const commentSchema = new mongoose.Schema(
-    {
-        author: authorSchema,
-        text: {
-            type: String,
-            required: true,
-        },
-    },
-    {
-        timestamps: true,
-    }
-);
 
 const postSchema = new mongoose.Schema(
     {
@@ -31,7 +13,8 @@ const postSchema = new mongoose.Schema(
             required: true,
         },
         comments: {
-            type: [commentSchema],
+            type: [mongoose.Schema.Types.ObjectId],
+            ref: "Comment",
             required: true,
         },
         author: authorSchema,
@@ -42,3 +25,4 @@ const postSchema = new mongoose.Schema(
 );
 
 const PostModel = mongoose.model<IPost>("Post", postSchema);
+export { PostModel };
