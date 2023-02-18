@@ -1,9 +1,9 @@
-import { IPostModel } from "@/core/entities/post.interfaces";
+import { IPostDBModel } from "@/core/entities/post.interfaces";
 import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 
 export function listOnePostFactory(
-    postDataSource: IDataSource<IPostModel>,
+    postDataSource: IDataSource<IPostDBModel>,
     errorServices: IErrorServices,
     isMongoId: (id: string) => boolean
 ) {

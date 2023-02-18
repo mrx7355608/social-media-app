@@ -1,10 +1,10 @@
-import { IPostModel } from "@/core/entities/post.interfaces";
+import { IPostDBModel } from "@/core/entities/post.interfaces";
 import {
     IDataSource,
     IPaginationData,
 } from "@/core/interfaces/data-source-generic.interface";
 
-export function listAllPostsFactory(postDataSource: IDataSource<IPostModel>) {
+export function listAllPostsFactory(postDataSource: IDataSource<IPostDBModel>) {
     return async function ({ limit, sort, page }: IPaginationData) {
         return await postDataSource.findAll({ limit, sort, page });
     };

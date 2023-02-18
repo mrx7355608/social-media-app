@@ -1,10 +1,10 @@
 import { postFactory } from "@/core/entities";
-import { IPost, IPostModel } from "@/core/entities/post.interfaces";
+import { IPost, IPostDBModel } from "@/core/entities/post.interfaces";
 import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 
 export function editPostFactory(
-    postDataSource: IDataSource<IPostModel>,
+    postDataSource: IDataSource<IPostDBModel>,
     errorServices: IErrorServices,
     isMongoId: (id: string) => boolean
 ) {
