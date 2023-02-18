@@ -7,7 +7,7 @@ export interface IPost {
     comments: [] | string[];
 }
 
-export interface IPostModel extends IPost, Document {
+export interface IPostDBModel extends IPost, Document {
     createdAt: Date;
     updatedAt: Date;
 }
