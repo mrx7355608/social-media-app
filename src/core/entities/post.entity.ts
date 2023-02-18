@@ -55,6 +55,14 @@ class Post {
         this.author = author;
     }
 
+    addLike(userId: string) {
+        this.likes.push(userId);
+    }
+
+    addComment(commentId: string) {
+        this.comments.push(commentId);
+    }
+
     removeComment(commentId: string) {
         // comments array contains mongodb objectId
         this.comments = this.comments.filter((id) => String(id) !== commentId);
