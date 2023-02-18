@@ -7,28 +7,38 @@ const authorSchema = new mongoose.Schema({
     profilePicture: String,
 });
 
-const commentSchema = new mongoose.Schema({
-    author: authorSchema,
-    text: {
-        type: String,
-        required: true,
+const commentSchema = new mongoose.Schema(
+    {
+        author: authorSchema,
+        text: {
+            type: String,
+            required: true,
+        },
     },
-});
+    {
+        timestamps: true,
+    }
+);
 
-const postSchema = new mongoose.Schema({
-    body: {
-        type: String,
-        required: true,
+const postSchema = new mongoose.Schema(
+    {
+        body: {
+            type: String,
+            required: true,
+        },
+        likes: {
+            type: [String],
+            required: true,
+        },
+        comments: {
+            type: [commentSchema],
+            required: true,
+        },
+        author: authorSchema,
     },
-    likes: {
-        type: [String],
-        required: true,
-    },
-    comments: {
-        type: [commentSchema],
-        required: true,
-    },
-    author: authorSchema,
-});
+    {
+        timestamps: true,
+    }
+);
 
 const PostModel = mongoose.model<IPost>("Post", postSchema);
