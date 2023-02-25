@@ -1,5 +1,6 @@
 import { IUserDBModel } from "@/core/interfaces/user.interfaces";
 import { IHttpRequest } from "../interfaces/httpRequest.interface";
+import config from "@/config/index";
 
 export function postSearchController({
     searchUsers,
@@ -12,11 +13,26 @@ export function postSearchController({
     return async function (httpRequest: IHttpRequest) {
         try {
             const userName = httpRequest.query.user;
+            if (!userName) {
+                return {
+                    statusCode: 400,
+                    body: { error: "Please enter a user's name to search" },
+                };
+            }
             const [firstname, lastname] = userName.split(" ");
             const users = await searchUsers(firstname, lastname);
+            const response = users.map((user) => {
+                return {
+                    fullname: `${user.firstname} ${user.lastname}`,
+                    profilePicture: user.profilePicture,
+                    _id: user._id,
+                    linkToProfile: `${config.apiUrl}/users/${user._id}`,
+                    createdAt: new Date(user.createdAt).toDateString(),
+                };
+            });
             return {
                 statusCode: 200,
-                body: users,
+                body: response,
             };
         } catch (err: any) {
             return {
