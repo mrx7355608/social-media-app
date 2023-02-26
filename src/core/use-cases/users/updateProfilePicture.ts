@@ -23,9 +23,9 @@ export function updateProfilePictureFactory(
             lastname: user.lastname,
             email: user.email,
             password: user.password,
-            confirmPassword: user.password,
-            friends: user.friends,
+            confirmPassword: user.confirmPassword,
             pendingRequests: user.pendingRequests,
+            friends: user.friends,
             profilePicture: user.profilePicture,
             isEmailVerified: user.isEmailVerified,
         });

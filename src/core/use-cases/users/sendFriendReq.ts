@@ -14,19 +14,19 @@ export function sendFriendRequestFactory(
     isMongoId: (str: string) => boolean
 ) {
     return async function (receiver: string, sender: string) {
-        // TODO: refactor this stupid code!
-        // receiver => to whom request is sent
-        // sender => one who is sending request
-
+        // prevent user from sending request
+        // to his own account
         if (receiver === sender) {
             return errorServices.validationError(
                 "You cannot send request to your own self"
             );
         }
 
+        // Fetch data of user and friend
         const friend = await validateAndFetch(receiver, "Friend");
         const user = await validateAndFetch(sender, "User");
 
+        // Check if user is already in our friends
         if (user.friends.includes(receiver)) {
             return errorServices.validationError(
                 "User is already your friend, request cannot be sent again"
@@ -43,22 +43,19 @@ export function sendFriendRequestFactory(
             );
         }
 
-        // Validate and create a friend entity
         const validFriend = userFactory.create({
             firstname: friend.firstname,
             lastname: friend.lastname,
             email: friend.email,
+            password: friend.password,
+            confirmPassword: friend.confirmPassword,
+            pendingRequests: friend.pendingRequests,
+            friends: friend.friends,
             profilePicture: friend.profilePicture,
             isEmailVerified: friend.isEmailVerified,
-            password: friend.password,
-            confirmPassword: friend.password,
-            friends: friend.friends,
-            pendingRequests: friend.pendingRequests,
         });
 
-        // Create a new request
         const newRequest = createNewRequest(user);
-        // Add request to friend's pending requests
         validFriend.addRequest(newRequest);
 
         return await userDataSource.update<IUser>(friend._id, {
@@ -73,35 +70,22 @@ export function sendFriendRequestFactory(
         });
     };
 
-    function validateId(id: string, label: string): void {
-        if (!id) {
-            return errorServices.validationError(`${label} Id is missing`);
-        }
-        if (!isMongoId(id)) {
-            return errorServices.validationError(`${label} Id is invalid`);
-        }
-    }
-
-    /*
-        @param - Id
-        @type - string (to be more specific it is a mongoose ObjectId)
-
-        @param - Label 
-        @type - string 
-        @values - "user" OR "friend"
-
-        Returns - mongodb document
-        Purpose - to validate ID and fetch document
-    */
     async function validateAndFetch(
         id: string,
         label: string
     ): Promise<IUserDBModel> {
-        validateId(id, label); // validates id
-        const data = await userDataSource.findById(id); // fetches user
+        // Validate id
+        if (!isMongoId(id)) {
+            return errorServices.validationError(`${label} Id is invalid`);
+        }
+
+        // fetches user
+        const data = await userDataSource.findById(id);
         if (!data) {
             return errorServices.notFoundError(`${label} not found`);
         }
+
+        // return user data
         return data;
     }
 
