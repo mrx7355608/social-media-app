@@ -33,4 +33,16 @@ export class PostDataSource implements IDataSource<IPostDBModel> {
     async deleteData(id: string): Promise<IPostDBModel> {
         return (await PostModel.findByIdAndDelete(id)) as IPostDBModel;
     }
+
+    async findAllWithFilter(filter: Object): Promise<IPostDBModel[]> {
+        const posts = await PostModel.find(filter);
+        return posts as IPostDBModel[];
+    }
+
+    async timeline(ids: string[], skipDocs: number): Promise<IPostDBModel[]> {
+        const posts = await PostModel.find({ "author.authorId": { $in: ids } })
+            .skip(skipDocs)
+            .limit(10);
+        return posts as IPostDBModel[];
+    }
 }
