@@ -9,11 +9,8 @@ export function updateProfilePictureFactory(
     isValidUrl: (url: string) => boolean
 ) {
     return async function (pictureUrl: string, userid: string) {
-        if (!pictureUrl) {
-            return errorServices.internalServerError();
-        }
         if (!isValidUrl(pictureUrl)) {
-            return errorServices.internalServerError();
+            return errorServices.validationError("Invalid picture url");
         }
 
         const user = await userDataSource.findById(userid);
