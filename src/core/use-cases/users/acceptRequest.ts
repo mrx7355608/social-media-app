@@ -1,6 +1,10 @@
 import { userFactory } from "@/core/entities";
 import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
-import { IUser, IUserDBModel } from "@/core/interfaces/user.interfaces";
+import {
+    IUser,
+    IUserDBModel,
+    IUserPendingRequest,
+} from "@/core/interfaces/user.interfaces";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 
 export function acceptRequestFactory(
@@ -9,9 +13,12 @@ export function acceptRequestFactory(
     isMongoId: (id: string) => boolean
 ) {
     return async function (friendId: string, userid: string) {
-        // validate ids
-        validateId(friendId, "Request");
-        validateId(userid, "User");
+        if (!isMongoId(friendId)) {
+            return errorServices.validationError("Friend Id is invalid");
+        }
+        if (!isMongoId(userid)) {
+            return errorServices.validationError("User Id is invalid");
+        }
 
         // fetch user
         const user = await userDataSource.findById(userid);
@@ -19,10 +26,9 @@ export function acceptRequestFactory(
             return errorServices.notFoundError("User not found");
         }
 
-        const isRequestPending = user.pendingRequests.filter(
-            (reqs) => reqs.friendId === friendId
-        )[0];
-        if (!isRequestPending) {
+        // Check if request is already pending or not
+        const isPending = isRequestPending(user.pendingRequests, friendId);
+        if (!isPending) {
             return errorServices.notFoundError("Request does not exist");
         }
 
@@ -31,67 +37,50 @@ export function acceptRequestFactory(
             return errorServices.notFoundError("Friend not found");
         }
 
-        // Create user entity
-        const validUser = userFactory.create({
-            firstname: user.firstname,
-            lastname: user.lastname,
-            email: user.email,
-            password: user.password,
-            confirmPassword: user.password,
-            isEmailVerified: user.isEmailVerified,
-            friends: user.friends,
-            profilePicture: user.profilePicture,
-            pendingRequests: user.pendingRequests,
-        });
+        // Create user and friend entity
+        const validUser = createValidEntity(user);
+        const validFriend = createValidEntity(friend);
 
-        // create friend entity
-        const validFriend = userFactory.create({
-            firstname: friend.firstname,
-            lastname: friend.lastname,
-            email: friend.email,
-            password: friend.password,
-            confirmPassword: friend.password,
-            isEmailVerified: friend.isEmailVerified,
-            friends: friend.friends,
-            profilePicture: friend.profilePicture,
-            pendingRequests: friend.pendingRequests,
-        });
-
-        // add friend in my friend list
+        // add friend
         validUser.acceptRequest(friendId);
-
-        // add me in friend's friend list
         validFriend.acceptRequest(userid);
 
-        await userDataSource.update<IUser>(friendId, {
-            firstname: validFriend.firstname,
-            lastname: validFriend.lastname,
-            email: validFriend.email,
-            password: validFriend.password,
-            isEmailVerified: validFriend.isEmailVerified,
-            profilePicture: validFriend.profilePicture,
-            friends: validFriend.friends,
-            pendingRequests: validFriend.pendingRequests,
-        });
-
-        return await userDataSource.update<IUser>(userid, {
-            firstname: validUser.firstname,
-            lastname: validUser.lastname,
-            email: validUser.email,
-            password: validUser.password,
-            isEmailVerified: validUser.isEmailVerified,
-            profilePicture: validUser.profilePicture,
-            friends: validUser.friends,
-            pendingRequests: validUser.pendingRequests,
-        });
+        // Update user and my data
+        await updateData(friendId, validFriend);
+        return await updateData(userid, validUser);
     };
 
-    function validateId(id: string, label: string): void {
-        if (!id) {
-            return errorServices.validationError(`${label} Id is missing`);
-        }
-        if (!isMongoId(id)) {
-            return errorServices.validationError(`${label} Id is invalid`);
-        }
+    function createValidEntity(data: IUser) {
+        return userFactory.create({
+            firstname: data.firstname,
+            lastname: data.lastname,
+            email: data.email,
+            password: data.password,
+            confirmPassword: data.password,
+            isEmailVerified: data.isEmailVerified,
+            friends: data.friends,
+            profilePicture: data.profilePicture,
+            pendingRequests: data.pendingRequests,
+        });
+    }
+
+    async function updateData(id: string, validEntity: IUser) {
+        await userDataSource.update<IUser>(id, {
+            firstname: validEntity.firstname,
+            lastname: validEntity.lastname,
+            email: validEntity.email,
+            password: validEntity.password,
+            isEmailVerified: validEntity.isEmailVerified,
+            profilePicture: validEntity.profilePicture,
+            friends: validEntity.friends,
+            pendingRequests: validEntity.pendingRequests,
+        });
+    }
+
+    function isRequestPending(
+        pendingRequests: IUserPendingRequest[],
+        friendId: string
+    ) {
+        return pendingRequests.filter((reqs) => reqs.friendId === friendId)[0];
     }
 }
