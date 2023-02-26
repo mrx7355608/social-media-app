@@ -33,9 +33,7 @@ export const userControllers = {
     }),
     getCurrentUser: getCurrentUserController(),
     getCurrentUserFriends: getCurrentUserFriendsController(),
-    search: postSearchController({
-        searchUsers: userServices.searchUsers,
-    }),
+    search: postSearchController(userServices.searchUsers),
     removeUserFriend: removeFriendController({
         removeFriend: userServices.removeFriend,
     }),
