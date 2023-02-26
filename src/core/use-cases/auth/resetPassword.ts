@@ -11,15 +11,11 @@ export function resetPasswordFactory(
     jwtServices: IJwtServices,
     hashServices: IHashServices
 ) {
-    return async function ({
-        token,
-        password,
-        confirmPassword,
-    }: {
-        token: string;
-        password: string;
-        confirmPassword: string;
-    }) {
+    return async function (
+        token: string,
+        password: string,
+        confirmPassword: string
+    ) {
         // Verify token
         const payload = jwtServices.verify(token);
         if (!payload) {

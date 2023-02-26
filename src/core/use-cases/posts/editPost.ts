@@ -11,7 +11,7 @@ export function editPostFactory(
     return async function (postId: string, userId: string, changes: Object) {
         // Validate Post Id
         if (!isMongoId(postId)) {
-            return errorServices.invalidIdError("Post Id is invalid");
+            return errorServices.validationError("Post Id is invalid");
         }
 
         // Check if post exists

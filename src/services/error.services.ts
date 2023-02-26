@@ -10,14 +10,6 @@ export class ErrorServices implements IErrorServices {
         throw new AppError(message, 400);
     }
 
-    internalServerError(): never {
-        throw new AppError("Oops! Something went wrong!", 500);
-    }
-
-    invalidIdError(message: string): never {
-        throw new AppError(message, 400);
-    }
-
     authenticationError(message: string): never {
         throw new AppError(message, 401);
     }

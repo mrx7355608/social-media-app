@@ -12,7 +12,7 @@ export function listOneUserFactory(
             return errorServices.validationError("User ID is missing");
         }
         if (!isMongoId(userid)) {
-            return errorServices.invalidIdError("User ID is invalid");
+            return errorServices.validationError("User ID is invalid");
         }
 
         const user = await userDataSource.findById(userid);

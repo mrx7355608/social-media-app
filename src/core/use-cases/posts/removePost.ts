@@ -9,7 +9,7 @@ export function removePostFactory(
 ) {
     return async function (postId: string, userId: string) {
         if (!isMongoId(postId)) {
-            return errorServices.invalidIdError("Post Id is invalid");
+            return errorServices.validationError("Post Id is invalid");
         }
 
         const postExists = await postDataSource.findById(postId);

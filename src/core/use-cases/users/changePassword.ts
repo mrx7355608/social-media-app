@@ -20,7 +20,7 @@ export function changePasswordFactory(
             return errorServices.validationError("User Id is missing");
         }
         if (!isMongoId(userid)) {
-            return errorServices.invalidIdError("User Id is invalid");
+            return errorServices.validationError("User Id is invalid");
         }
         const user = await userDataSource.findById(userid);
         if (!user) {

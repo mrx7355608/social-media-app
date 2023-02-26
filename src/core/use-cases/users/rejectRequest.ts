@@ -57,7 +57,7 @@ export function rejectRequestFactory(
             return errorServices.validationError(`${label} Id is missing`);
         }
         if (!isMongoId(id)) {
-            return errorServices.invalidIdError(`${label} Id is invalid`);
+            return errorServices.validationError(`${label} Id is invalid`);
         }
     }
 }

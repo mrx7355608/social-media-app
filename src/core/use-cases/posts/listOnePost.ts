@@ -9,7 +9,7 @@ export function listOnePostFactory(
 ) {
     return async function (postId: string) {
         if (!isMongoId(postId)) {
-            return errorServices.invalidIdError("Post Id is invalid");
+            return errorServices.validationError("Post Id is invalid");
         }
         const post = await postDataSource.findById(postId);
         if (!post) {

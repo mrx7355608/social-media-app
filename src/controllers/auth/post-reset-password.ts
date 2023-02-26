@@ -4,15 +4,11 @@ import { IHttpRequest } from "../interfaces/httpRequest.interface";
 export function resetPasswordController({
     resetPassword,
 }: {
-    resetPassword: ({
-        token,
-        password,
-        confirmPassword,
-    }: {
-        token: string;
-        password: string;
-        confirmPassword: string;
-    }) => Promise<IUserDBModel>;
+    resetPassword: (
+        token: string,
+        password: string,
+        confirmPassword: string
+    ) => Promise<IUserDBModel>;
 }) {
     return async function (httpRequest: IHttpRequest) {
         try {
@@ -25,11 +21,7 @@ export function resetPasswordController({
 
             const password: string = httpRequest.body.password;
             const confirmPassword: string = httpRequest.body.confirmPassword;
-            await resetPassword({
-                token,
-                password,
-                confirmPassword,
-            });
+            await resetPassword(token, password, confirmPassword);
 
             return {
                 statusCode: 200,
