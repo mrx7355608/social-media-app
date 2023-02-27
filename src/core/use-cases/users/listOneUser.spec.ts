@@ -1,7 +1,7 @@
 import { listOneUserFactory } from "./listOneUser";
 import validator from "validator";
 import { ErrorServices } from "@/services/error.services";
-import { mockUserDb } from "@/mocks/userDataSource";
+import { mockUserDb } from "@/mocks/mockUserDb";
 
 const errorServices = new ErrorServices();
 const listOneUser = listOneUserFactory(

@@ -24,7 +24,7 @@ export function verifyAccountController({
         } catch (err: any) {
             return {
                 statusCode: err.statusCode || 400,
-                body: { message: err.message },
+                body: { error: err.message },
             };
         }
     };

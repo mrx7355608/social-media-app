@@ -48,7 +48,7 @@ export function sendFriendRequestFactory(
             lastname: friend.lastname,
             email: friend.email,
             password: friend.password,
-            confirmPassword: friend.confirmPassword,
+            confirmPassword: friend.password,
             pendingRequests: friend.pendingRequests,
             friends: friend.friends,
             profilePicture: friend.profilePicture,
