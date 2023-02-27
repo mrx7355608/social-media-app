@@ -16,9 +16,6 @@ export function changePasswordFactory(
         newPassword: string,
         confirmNewPassword: string
     ) {
-        if (!userid) {
-            return errorServices.validationError("User Id is missing");
-        }
         if (!isMongoId(userid)) {
             return errorServices.validationError("User Id is invalid");
         }
@@ -52,6 +49,7 @@ export function changePasswordFactory(
             pendingRequests: user.pendingRequests,
         });
         const newHashedPassword = await hashServices.hash(newPassword);
+
         return await userDataSource.update<IUser>(user._id, {
             firstname: validUser.firstname,
             lastname: validUser.lastname,

@@ -1,12 +1,12 @@
 import { sendFriendRequestFactory } from "./sendFriendReq";
-import { userDB, mockDbOperations } from "@/mocks/userDataSource";
+import { mockUserDb, mockDbOperations } from "@/mocks/userDataSource";
 import { ErrorServices } from "@/services/error.services";
 import { IUserDBModel } from "@/core/interfaces/user.interfaces";
 import validator from "validator";
 
 const errorServices = new ErrorServices();
 const sendFriendReq = sendFriendRequestFactory(
-    userDB,
+    mockUserDb,
     errorServices,
     validator.isMongoId
 );

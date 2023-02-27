@@ -1,4 +1,4 @@
-import { userDB } from "@/mocks/userDataSource";
+import { mockUserDb } from "@/mocks/userDataSource";
 import { addUserFactory } from "./addUser";
 import { ErrorServices } from "@/services/error.services";
 import { IUser } from "@/core/interfaces/user.interfaces";
@@ -9,7 +9,7 @@ const emailServices = new MockEmailServices();
 const errorServices = new ErrorServices();
 const hashServices = new HashServices();
 const addUser = addUserFactory(
-    userDB,
+    mockUserDb,
     errorServices,
     hashServices,
     emailServices

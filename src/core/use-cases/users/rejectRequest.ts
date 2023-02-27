@@ -9,9 +9,12 @@ export function rejectRequestFactory(
     isMongoId: (id: string) => boolean
 ) {
     return async function (requestId: string, userid: string) {
-        // validate ids
-        validateId(requestId, "Request");
-        validateId(userid, "User");
+        if (!isMongoId(requestId)) {
+            return errorServices.validationError("Request Id is invalid");
+        }
+        if (!isMongoId(userid)) {
+            return errorServices.validationError("User Id is invalid");
+        }
 
         // fetch user
         const user = await userDataSource.findById(userid);
@@ -51,13 +54,4 @@ export function rejectRequestFactory(
             pendingRequests: validUser.pendingRequests,
         });
     };
-
-    function validateId(id: string, label: string): void {
-        if (!id) {
-            return errorServices.validationError(`${label} Id is missing`);
-        }
-        if (!isMongoId(id)) {
-            return errorServices.validationError(`${label} Id is invalid`);
-        }
-    }
 }

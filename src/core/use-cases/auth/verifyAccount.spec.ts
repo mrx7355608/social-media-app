@@ -1,12 +1,16 @@
 import { verifyAccountFactory } from "./verifyAccount";
-import { userDB } from "@/mocks/userDataSource";
+import { mockUserDb } from "@/mocks/userDataSource";
 import { MockJwtServices } from "@/mocks/jwtServices";
 import { ErrorServices } from "@/services/error.services";
 import { mockDbOperations } from "@/mocks/userDataSource";
 
 const errorServices = new ErrorServices();
 const jwtServices = new MockJwtServices();
-const verifyAccount = verifyAccountFactory(userDB, errorServices, jwtServices);
+const verifyAccount = verifyAccountFactory(
+    mockUserDb,
+    errorServices,
+    jwtServices
+);
 
 describe("Verify Account", function () {
     it("throws error on invalid token", async function () {

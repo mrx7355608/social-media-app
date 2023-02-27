@@ -9,14 +9,20 @@ export function removeFriendFactory(
     isMongoId: (id: string) => boolean
 ) {
     return async function (userid: string, friendid: string) {
-        validateId(userid, "User");
-        validateId(friendid, "Friend");
+        if (!isMongoId(userid)) {
+            return errorServices.validationError("User Id is invalid");
+        }
+        if (!isMongoId(friendid)) {
+            return errorServices.validationError("Friend Id is invalid");
+        }
 
+        // Get user from db
         const user = await userDataSource.findById(userid);
         if (!user) {
             return errorServices.notFoundError("User not found");
         }
 
+        // Check if friend exists in friend list
         const friendExists = user.friends.filter(
             (id) => String(id) === friendid
         )[0];
@@ -48,13 +54,4 @@ export function removeFriendFactory(
             profilePicture: validUser.profilePicture,
         });
     };
-
-    function validateId(id: string, label: string) {
-        if (!id) {
-            return errorServices.validationError(`${label} Id is missing`);
-        }
-        if (!isMongoId(id)) {
-            return errorServices.validationError(`${label} Id is invalid`);
-        }
-    }
 }

@@ -8,9 +8,6 @@ export function listOneUserFactory(
     isMongoId: (id: string) => boolean
 ) {
     return async function (userid: string): Promise<IUserDBModel> {
-        if (!userid) {
-            return errorServices.validationError("User ID is missing");
-        }
         if (!isMongoId(userid)) {
             return errorServices.validationError("User ID is invalid");
         }

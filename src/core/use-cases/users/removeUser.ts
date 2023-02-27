@@ -8,9 +8,6 @@ export function removeUserFactory(
     isMongoId: (id: string) => boolean
 ) {
     return async function (userid: string) {
-        if (!userid) {
-            return errorServices.validationError("User Id is missing");
-        }
         if (!isMongoId(userid)) {
             return errorServices.validationError("User Id is invalid");
         }
