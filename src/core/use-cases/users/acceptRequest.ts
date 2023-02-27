@@ -14,7 +14,7 @@ export function acceptRequestFactory(
 ) {
     return async function (friendId: string, userid: string) {
         if (!isMongoId(friendId)) {
-            return errorServices.validationError("Friend Id is invalid");
+            return errorServices.validationError("Request Id is invalid");
         }
         if (!isMongoId(userid)) {
             return errorServices.validationError("User Id is invalid");
@@ -27,8 +27,7 @@ export function acceptRequestFactory(
         }
 
         // Check if request is already pending or not
-        const isPending = isRequestPending(user.pendingRequests, friendId);
-        if (!isPending) {
+        if (!isRequestPending(user.pendingRequests, friendId)) {
             return errorServices.notFoundError("Request does not exist");
         }
 
@@ -65,7 +64,7 @@ export function acceptRequestFactory(
     }
 
     async function updateData(id: string, validEntity: IUser) {
-        await userDataSource.update<IUser>(id, {
+        return await userDataSource.update<IUser>(id, {
             firstname: validEntity.firstname,
             lastname: validEntity.lastname,
             email: validEntity.email,
