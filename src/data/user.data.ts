@@ -36,26 +36,29 @@ export class UserDataSource implements IDataSource<IUserDBModel> {
         return deletedUser as IUserDBModel;
     }
 
-    async search(query: {
-        firstname: string;
-        lastname: string;
-    }): Promise<IUserDBModel[]> {
+    async search(
+        firstname: string,
+        lastname: string,
+        skipDocs: number
+    ): Promise<IUserDBModel[]> {
         const res = await UserModel.find<IUserDBModel>({
             $and: [
                 {
                     firstname: {
-                        $regex: query.firstname,
+                        $regex: firstname,
                         $options: "i",
                     },
                 },
                 {
                     lastname: {
-                        $regex: query.lastname || "",
+                        $regex: lastname || "",
                         $options: "i",
                     },
                 },
             ],
-        });
+        })
+            .skip(skipDocs)
+            .limit(10);
 
         return res;
     }
