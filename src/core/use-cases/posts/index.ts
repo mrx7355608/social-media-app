@@ -6,12 +6,16 @@ import { removePostFactory } from "./removePost";
 import { likePostFactory } from "./likePost";
 import { commentOnPostFactory } from "./commentOnPost";
 import { removeCommentFromPostFactory } from "./removeCommentFromPost";
+import { listMyPostsFactory } from "./listMyPosts";
+import { listTimelineFactory } from "./listTimeline";
 
 import { ErrorServices } from "@/services/error.services";
 import validator from "validator";
 import { PostDataSource } from "@/data/post.data";
+import { UserDataSource } from "@/data/user.data";
 
 const postDataSource = new PostDataSource();
+const userDataSource = new UserDataSource();
 const errorServices = new ErrorServices();
 const isMongoId = validator.isMongoId;
 
@@ -25,6 +29,13 @@ const addPost = addPostFactory(postDataSource);
 const editPost = editPostFactory(postDataSource, errorServices, isMongoId);
 const removePost = removePostFactory(postDataSource, errorServices, isMongoId);
 const likePost = likePostFactory(postDataSource, errorServices, isMongoId);
+const listTimeline = listTimelineFactory(userDataSource, postDataSource);
+const listMyPosts = listMyPostsFactory(
+    userDataSource,
+    postDataSource,
+    errorServices,
+    isMongoId
+);
 const commentOnPost = commentOnPostFactory(
     postDataSource,
     errorServices,
@@ -45,4 +56,6 @@ export const postServices = {
     likePost,
     commentOnPost,
     removeComment,
+    listMyPosts,
+    listTimeline,
 };

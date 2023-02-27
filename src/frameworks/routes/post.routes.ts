@@ -7,9 +7,11 @@ export const postRouter = Router();
 
 postRouter.use(isAuth);
 postRouter.get("/", makeRequest(postController.getAllPosts));
+postRouter.get("/me", makeRequest(postController.getMyPosts));
 postRouter.get("/:id", makeRequest(postController.getOnePost));
 postRouter.post("/", makeRequest(postController.createPost));
 postRouter.patch("/:id", makeRequest(postController.updatePost));
 postRouter.delete("/:id", makeRequest(postController.deletePost));
 postRouter.patch("/like/:id", makeRequest(postController.likePost));
 postRouter.patch("/comment/:id", makeRequest(postController.commentPost));
+postRouter.get("/me/timeline", makeRequest(postController.getTimeline));
