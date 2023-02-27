@@ -1,7 +1,6 @@
 import "dotenv/config";
 import supertest from "supertest";
 import { app } from "@/frameworks/app";
-import appConfig from "@/config/index";
 import mongoose from "mongoose";
 
 const agent = supertest.agent(app);
@@ -10,11 +9,9 @@ describe("Testing Auth Routes", function () {
     beforeAll(async function () {
         mongoose.set("strictQuery", true);
         await mongoose.connect("mongodb://localhost:27017/test-social-media");
-        console.log("Connected to db");
     });
     afterAll(async function () {
         await mongoose.disconnect();
-        console.log("Disconnected from db");
     });
 
     describe("Logout", function () {
@@ -64,22 +61,13 @@ describe("Testing Auth Routes", function () {
                     password: "leagueOfLegends123",
                 })
                 .expect(200);
-            expect(response.body.login).toBe(true);
-        });
-    });
-    describe("Login as guest", function () {
-        beforeAll(async function () {
-            await agent.post("/api/v1/auth/logout");
-        });
-        it("Logs in as guest account", async function () {
-            const response = await agent
-                .post("/api/v1/auth/login")
-                .send({
-                    email: "guestuser123@gmail.com",
-                    password: "guestAccount123456999",
-                })
-                .expect(200);
-            expect(response.body.login).toBe(true);
+
+            expect(response.body).toEqual({
+                fullname: expect.any(String),
+                profilePicture: expect.any(String),
+                id: expect.any(String),
+                pendingRequests: expect.any(Array),
+            });
         });
     });
     describe("Reset password", function () {
@@ -94,6 +82,18 @@ describe("Testing Auth Routes", function () {
             );
         });
     });
+    describe("Verify account", function () {
+        it("throws error on invalid auth token", async function () {
+            const response = await agent
+                .get(
+                    "/api/v1/auth/verify-account?token=jfklasjdfklajsdklfjasdfll"
+                )
+                .expect(401);
+            expect(response.body.error).toBe(
+                "Auth token is invalid or expired"
+            );
+        });
+    });
     describe("Signup", function () {
         it("throws error when creds are not provided", async function () {
             const response = await agent
@@ -101,6 +101,30 @@ describe("Testing Auth Routes", function () {
                 .send()
                 .expect(400);
             expect(response.body.error).toBe("User data is missing");
+        });
+    });
+    describe("Forgot password", function () {
+        it("returns error if email is not verified", async function () {
+            const response = await agent
+                .post("/api/v1/auth/forgot-password")
+                .send({
+                    email: "guestuser123@gmail.com",
+                })
+                .expect(400);
+            expect(response.body.error).toBe(
+                "Email not verified, please verify your email to continue"
+            );
+        });
+        it("returns error if account does not exists", async function () {
+            const response = await agent
+                .post("/api/v1/auth/forgot-password")
+                .send({
+                    email: "unknownEmail@gmail.com",
+                })
+                .expect(404);
+            expect(response.body.error).toBe(
+                "Account with this email does not exist"
+            );
         });
     });
 });

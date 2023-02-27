@@ -10,17 +10,15 @@ describe("Testing User Routes", function () {
     beforeAll(async function () {
         mongoose.set("strictQuery", true);
         await mongoose.connect("mongodb://localhost:27017/test-social-media");
+
         // LOGIN before making authenticated requests
-        console.log("Connected to db");
         await agent.post("/api/v1/auth/login").send({
             email: "userOne@media.com",
             password: "leagueOfLegends123",
         });
-        console.log("Logged in successfully");
     });
     afterAll(async function () {
         await mongoose.disconnect();
-        console.log("Disconnected from db");
     });
 
     describe("Sending Friend Requests", function () {
