@@ -108,4 +108,36 @@ describe("Testing User Routes", function () {
             expect(response.body.message).toBe("Request rejected");
         });
     });
+
+    describe("Search", function () {
+        it("returns error message if user query is empty OR user query param is missing", async function () {
+            const response = await agent
+                .get("/api/v1/users/search?lol=code sucks")
+                .expect(400);
+            expect(response.body.error).toBe(
+                "Please enter a user's name to search"
+            );
+        });
+
+        it("return searched users ", async function () {
+            const response = await agent
+                .get("/api/v1/users/search?user=guest")
+                .expect(200);
+            expect(response.body).toHaveLength(1);
+        });
+        it("confirms that search users do not have any sensitive data", async function () {
+            const response = await agent
+                .get("/api/v1/users/search?user=guest")
+                .expect(200);
+            expect(response.body).toStrictEqual([
+                {
+                    fullname: expect.any(String),
+                    linkToProfile: expect.any(String),
+                    profilePicture: expect.any(String),
+                    createdAt: expect.any(String),
+                    _id: expect.any(String),
+                },
+            ]);
+        });
+    });
 });
