@@ -1,8 +1,8 @@
 import { verifyAccountFactory } from "./verifyAccount";
-import { mockUserDb } from "@/mocks/userDataSource";
+import { mockUserDb } from "@/mocks/mockUserDb";
 import { MockJwtServices } from "@/mocks/jwtServices";
 import { ErrorServices } from "@/services/error.services";
-import { mockDbOperations } from "@/mocks/userDataSource";
+import { mockDbOperations } from "@/mocks/mockUserDb";
 
 const errorServices = new ErrorServices();
 const jwtServices = new MockJwtServices();

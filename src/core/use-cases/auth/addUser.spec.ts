@@ -1,4 +1,4 @@
-import { mockUserDb } from "@/mocks/userDataSource";
+import { mockUserDb } from "@/mocks/mockUserDb";
 import { addUserFactory } from "./addUser";
 import { ErrorServices } from "@/services/error.services";
 import { IUser } from "@/core/interfaces/user.interfaces";

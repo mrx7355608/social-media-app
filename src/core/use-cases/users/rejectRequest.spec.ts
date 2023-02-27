@@ -1,4 +1,4 @@
-import { mockDbOperations, mockUserDb } from "@/mocks/userDataSource";
+import { mockDbOperations, mockUserDb } from "@/mocks/mockUserDb";
 import { rejectRequestFactory } from "./rejectRequest";
 import { ErrorServices } from "@/services/error.services";
 import validator from "validator";

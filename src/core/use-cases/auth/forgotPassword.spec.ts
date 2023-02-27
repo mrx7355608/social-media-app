@@ -1,9 +1,9 @@
 import { forgotPasswordFactory } from "./forgotPassword";
 import { ErrorServices } from "@/services/error.services";
-import { mockUserDb } from "@/mocks/userDataSource";
+import { mockUserDb } from "@/mocks/mockUserDb";
 import validator from "validator";
 import { MockEmailServices } from "@/mocks/emailServices";
-import { mockDbOperations } from "@/mocks/userDataSource";
+import { mockDbOperations } from "@/mocks/mockUserDb";
 
 const emailServices = new MockEmailServices();
 const errorServices = new ErrorServices();
