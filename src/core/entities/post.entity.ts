@@ -5,8 +5,9 @@ export class PostFactory {
         this.sanitize = sanitize;
     }
 
-    create(postData: IPost) {
-        const { body, author, likes, comments } = postData;
+    create(postData: IPost): IPost {
+        const { body, author, likes, comments, createdAt, updatedAt } =
+            postData;
 
         // Validations
         if (!body) {
@@ -35,9 +36,11 @@ export class PostFactory {
 
         return new Post(
             sanitizedBody,
-            postData.likes,
-            postData.comments,
-            postData.author
+            likes,
+            comments,
+            author,
+            createdAt,
+            updatedAt
         );
     }
 }
@@ -47,12 +50,16 @@ class Post {
         public body: string,
         public likes: string[],
         public comments: string[],
-        public author: string
+        public author: string,
+        public createdAt: Date,
+        public updatedAt: Date
     ) {
         this.body = body;
         this.likes = likes;
         this.comments = comments;
         this.author = author;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     addLike(userId: string) {
