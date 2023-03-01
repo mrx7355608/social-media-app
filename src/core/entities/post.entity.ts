@@ -1,4 +1,4 @@
-import { IAuthor, IPost } from "./post.interfaces";
+import { IPost } from "./post.interfaces";
 
 export class PostFactory {
     constructor(private sanitize: (str: string) => string) {
@@ -47,7 +47,7 @@ class Post {
         public body: string,
         public likes: string[],
         public comments: string[],
-        public author: IAuthor
+        public author: string
     ) {
         this.body = body;
         this.likes = likes;

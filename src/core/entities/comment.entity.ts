@@ -1,5 +1,4 @@
 import { IComment } from "./comment.interfaces";
-import { IAuthor } from "./post.interfaces";
 
 export class CommentFactory {
     constructor(private sanitize: (str: string) => string) {
@@ -8,11 +7,8 @@ export class CommentFactory {
 
     create(commentData: IComment) {
         const { author, text } = commentData;
-        if (!text) {
+        if (!text || !text.trim()) {
             throw new Error("Comment text is missing");
-        }
-        if (this.sanitize(text).length < 5) {
-            throw new Error("Comment text should be 5 characters at least");
         }
         if (!author) {
             throw new Error("Comment author is missing");
@@ -24,7 +20,7 @@ export class CommentFactory {
 }
 
 class Comment {
-    constructor(public author: IAuthor, public text: string) {
+    constructor(public author: string, public text: string) {
         this.author = author;
         this.text = text;
     }

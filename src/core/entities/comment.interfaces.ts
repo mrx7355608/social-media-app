@@ -1,8 +1,7 @@
-import { IAuthor } from "./post.interfaces";
 import { Document } from "mongoose";
 
 export interface IComment {
-    author: IAuthor;
+    author: string;
     text: string;
 }
 
