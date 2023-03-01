@@ -1,5 +1,4 @@
 import { IPost } from "@/core/entities/post.interfaces";
-import { authorSchema } from "./author.model";
 import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema(
@@ -17,7 +16,11 @@ const postSchema = new mongoose.Schema(
             ref: "Comment",
             required: true,
         },
-        author: authorSchema,
+        author: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+        },
     },
     {
         timestamps: true,
