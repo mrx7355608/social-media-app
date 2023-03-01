@@ -13,7 +13,7 @@ const userFactory = new UserFactory(
     validator.isURL
 );
 
-export { userFactory, postFactory };
+export { userFactory, postFactory, commentFactory };
 
 /* HELPER FUNCTIONS FOR ENTITY FACTORIES*/
 function detectSpecialChars(str: string): boolean {
