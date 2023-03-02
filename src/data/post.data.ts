@@ -1,4 +1,4 @@
-import { IPost, IPostDBModel } from "@/core/entities/post.interfaces";
+import { IPost, IPostDBModel } from "@/core/interfaces/post.interfaces";
 import { IPostDataSource } from "@/core/interfaces/postDataSource.itnerface";
 import { PostModel } from "@/frameworks/models/post.model";
 
@@ -12,14 +12,10 @@ export class PostDataSource implements IPostDataSource {
         return await PostModel.create(data);
     }
 
-    async update(id: string, data: IPost): Promise<IPostDBModel> {
-        const updatedPost = await PostModel.findByIdAndUpdate(
-            id,
-            data as IPost,
-            {
-                new: true,
-            }
-        );
+    async update(id: string, data: any): Promise<IPostDBModel> {
+        const updatedPost = await PostModel.findByIdAndUpdate(id, data, {
+            new: true,
+        });
         return updatedPost as IPostDBModel;
     }
 
@@ -29,18 +25,41 @@ export class PostDataSource implements IPostDataSource {
     }
 
     async findAllWithFilter(filter: Object): Promise<IPostDBModel[]> {
-        const posts = await PostModel.find(filter).populate(
-            "author",
-            "firstname lastname profilePicture"
-        );
-        return posts;
+        const posts = await PostModel.find(filter).populate([
+            {
+                path: "author",
+                select: "firstname lastname profilePicture",
+            },
+            {
+                path: "comments",
+                select: "text author",
+                populate: {
+                    path: "author",
+                    select: "firstname lastname profilePicture",
+                },
+            },
+        ]);
+        return posts as IPostDBModel[];
     }
 
     async timeline(ids: string[], skipDocs: number): Promise<IPostDBModel[]> {
         const posts = await PostModel.find({ author: { $in: ids } })
             .skip(skipDocs)
             .limit(10)
-            .populate("author", "firstname lastname profilePicture");
-        return posts;
+            .populate([
+                {
+                    path: "author",
+                    select: "firstname lastname profilePicture",
+                },
+                {
+                    path: "comments",
+                    select: "text author",
+                    populate: {
+                        path: "author",
+                        select: "firstname lastname profilePicture",
+                    },
+                },
+            ]);
+        return posts as IPostDBModel[];
     }
 }
