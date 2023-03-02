@@ -1,12 +1,17 @@
-import { IPostDBModel } from "@/core/entities/post.interfaces";
+import { IComment } from "@/core/interfaces/comment.interfaces";
+import { IPostDBModel } from "@/core/interfaces/post.interfaces";
 import { IHttpRequest } from "../interfaces/httpRequest.interface";
 
 export function patchCommentController(
-    commentPost: (postId: string, userId: string) => Promise<IPostDBModel>
+    commentPost: (
+        postId: string,
+        commentData: IComment
+    ) => Promise<IPostDBModel>
 ) {
     return async function (httpRequest: IHttpRequest) {
         try {
             const postId = httpRequest.params.id;
+            const userId = String(httpRequest.user._id);
             if (!postId) {
                 return {
                     statusCode: 400,
@@ -14,7 +19,6 @@ export function patchCommentController(
                 };
             }
 
-            const userId = String(httpRequest.user._id);
             if (!userId) {
                 return {
                     statusCode: 400,
@@ -22,7 +26,14 @@ export function patchCommentController(
                 };
             }
 
-            await commentPost(postId, userId);
+            const commentData: IComment = {
+                text: httpRequest.body.comment,
+                author: userId,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+            };
+
+            await commentPost(postId, commentData);
             return {
                 statusCode: 200,
                 body: { message: "Comment added on post!" },

@@ -1,4 +1,4 @@
-import { IPostDBModel } from "@/core/entities/post.interfaces";
+import { IPostDBModel } from "@/core/interfaces/post.interfaces";
 import { IHttpRequest } from "../interfaces/httpRequest.interface";
 
 export function getOnePostController(
@@ -15,9 +15,23 @@ export function getOnePostController(
             }
 
             const post = await listOnePost(postId);
+            const populatedPost = await post.populate([
+                {
+                    path: "author",
+                    select: "firstname lastname profilePicture",
+                },
+                {
+                    path: "comments",
+                    select: "text author",
+                    populate: {
+                        path: "author",
+                        select: "firstname lastname profilePicture",
+                    },
+                },
+            ]);
             return {
                 statusCode: 200,
-                body: post,
+                body: populatedPost,
             };
         } catch (err: any) {
             return {

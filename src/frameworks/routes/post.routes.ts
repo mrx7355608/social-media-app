@@ -6,7 +6,6 @@ import isAuth from "../middlewares/isAuth";
 export const postRouter = Router();
 
 postRouter.use(isAuth);
-postRouter.get("/", makeRequest(postController.getAllPosts));
 postRouter.get("/me", makeRequest(postController.getMyPosts));
 postRouter.get("/:id", makeRequest(postController.getOnePost));
 postRouter.post("/", makeRequest(postController.createPost));

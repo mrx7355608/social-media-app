@@ -1,6 +1,5 @@
-import { IAuthor, IPost, IPostDBModel } from "@/core/entities/post.interfaces";
+import { IPost, IPostDBModel } from "@/core/interfaces/post.interfaces";
 import { IHttpRequest } from "../interfaces/httpRequest.interface";
-import appConfig from "@/config/index";
 
 export function createNewPostController(
     addPost: (postData: IPost) => Promise<IPostDBModel>
@@ -18,27 +17,31 @@ export function createNewPostController(
             // Create new post
             const { user } = httpRequest;
             // TODO: capitalize first letter of author's firstname and lastname
-            const postData = {
-                author: {
-                    authorId: user._id,
-                    fullname: user.firstname + user.lastname,
-                    profilePicture: user.profilePicture,
-                    linkToProfile: `${appConfig.apiUrl}/users/${user._id}`,
-                },
+            const postData: IPost = {
+                author: user._id,
                 body: postBody,
                 likes: [],
                 comments: [],
+                createdAt: new Date(),
+                updatedAt: new Date(),
             };
 
             // Add post to db
             const newPost = await addPost(postData);
+            const populated = await newPost.populate(
+                "author",
+                "firstname lastname profilePicture"
+            );
 
             // send response
             const response = {
                 _id: newPost._id,
-                author: newPost.author,
+                author: populated.author,
                 body: newPost.body,
+                likes: newPost.likes,
+                comments: newPost.comments,
                 createdAt: new Date(newPost.createdAt).toDateString(),
+                updatedAt: new Date(newPost.createdAt).toDateString(),
             };
 
             return {
