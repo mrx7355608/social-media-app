@@ -7,6 +7,7 @@ import { commentOnPostFactory } from "./commentOnPost";
 import { removeCommentFromPostFactory } from "./removeCommentFromPost";
 import { listMyPostsFactory } from "./listMyPosts";
 import { listTimelineFactory } from "./listTimeline";
+import { listCommentsOfPostFactory } from "./listCommentsOfPost";
 
 import { ErrorServices } from "@/services/error.services";
 import validator from "validator";
@@ -18,6 +19,11 @@ const userDataSource = new UserDataSource();
 const errorServices = new ErrorServices();
 const isMongoId = validator.isMongoId;
 
+const listComments = listCommentsOfPostFactory(
+    postDataSource,
+    errorServices,
+    isMongoId
+);
 const listOnePost = listOnePostFactory(
     postDataSource,
     errorServices,
@@ -55,4 +61,5 @@ export const postServices = {
     removeComment,
     listMyPosts,
     listTimeline,
+    listComments,
 };

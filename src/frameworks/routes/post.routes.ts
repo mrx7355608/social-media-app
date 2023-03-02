@@ -13,4 +13,5 @@ postRouter.patch("/:id", makeRequest(postController.updatePost));
 postRouter.delete("/:id", makeRequest(postController.deletePost));
 postRouter.patch("/like/:id", makeRequest(postController.likePost));
 postRouter.patch("/comment/:id", makeRequest(postController.commentPost));
+postRouter.get("/comments/:id", makeRequest(postController.getComments));
 postRouter.get("/me/timeline", makeRequest(postController.getTimeline));

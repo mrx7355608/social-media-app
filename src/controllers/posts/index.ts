@@ -3,7 +3,7 @@ import { postServices } from "@/core/use-cases/posts";
 import { patchPostController } from "./patch-post";
 import { patchLikeController } from "./patch-like-post";
 import { patchCommentController } from "./patch-comment-post";
-import { getPostsController } from "./get-posts";
+import { getCommentsController } from "./get-comments";
 import { getOnePostController } from "./get-one-post";
 import { deletePostController } from "./delete-post";
 import { getMyPostsController } from "./get-my-posts";
@@ -17,6 +17,7 @@ const likePost = patchLikeController(postServices.likePost);
 const commentPost = patchCommentController(postServices.commentOnPost);
 const getMyPosts = getMyPostsController(postServices.listMyPosts);
 const getTimeline = getTimelineController(postServices.listTimeline);
+const getComments = getCommentsController(postServices.listComments);
 
 export const postController = {
     getOnePost,
@@ -27,4 +28,5 @@ export const postController = {
     commentPost,
     getMyPosts,
     getTimeline,
+    getComments,
 };
