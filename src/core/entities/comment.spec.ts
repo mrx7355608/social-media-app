@@ -9,6 +9,8 @@ describe("Comments entity", function () {
             commentFactory.create({
                 author: "",
                 text: "First comment",
+                createdAt: new Date(),
+                updatedAt: new Date(),
             })
         ).toThrow("Comment author is missing");
     });
@@ -17,6 +19,8 @@ describe("Comments entity", function () {
             commentFactory.create({
                 author: "63fec182927aea394b1e5f16",
                 text: "",
+                createdAt: new Date(),
+                updatedAt: new Date(),
             })
         ).toThrow("Comment text is missing");
     });
@@ -26,6 +30,8 @@ describe("Comments entity", function () {
             commentFactory.create({
                 author: "63fec182927aea394b1e5f16",
                 text: " ",
+                createdAt: new Date(),
+                updatedAt: new Date(),
             })
         ).toThrow("Comment text is missing");
     });
@@ -34,6 +40,8 @@ describe("Comments entity", function () {
         const comment = commentFactory.create({
             author: "63fec182927aea394b1e5f16",
             text: "hello",
+            createdAt: new Date(),
+            updatedAt: new Date(),
         });
         expect(comment.text).toBe("hello-sanitized");
     });
