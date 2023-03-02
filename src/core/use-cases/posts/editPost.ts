@@ -1,10 +1,9 @@
 import { postFactory } from "@/core/entities";
-import { IPost, IPostDBModel } from "@/core/entities/post.interfaces";
-import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
+import { IPostDataSource } from "@/core/interfaces/postDataSource.itnerface";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 
 export function editPostFactory(
-    postDataSource: IDataSource<IPostDBModel>,
+    postDataSource: IPostDataSource,
     errorServices: IErrorServices,
     isMongoId: (id: string) => boolean
 ) {
@@ -21,15 +20,16 @@ export function editPostFactory(
         }
 
         // Check if the user owns the post
-        if (postExists.author.authorId !== userId) {
+        if (String(postExists.author) !== userId) {
             return errorServices.forbiddenError("You do not own this post");
         }
 
         const newPostData = Object.assign(postExists, changes);
         const validPost = postFactory.create(newPostData);
 
-        return await postDataSource.update<any>(postId, {
+        return await postDataSource.update(postId, {
             body: validPost.body,
+            updatedAt: new Date(),
         });
     };
 }
