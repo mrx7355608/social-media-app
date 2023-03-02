@@ -1,11 +1,11 @@
 import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
+import { IPostDataSource } from "@/core/interfaces/postDataSource.itnerface";
 import { IUserDBModel } from "@/core/interfaces/user.interfaces";
-import { PostDataSource } from "@/data/post.data";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 
 export function listMyPostsFactory(
     userDataSource: IDataSource<IUserDBModel>,
-    postDataSource: PostDataSource,
+    postDataSource: IPostDataSource,
     errorServices: IErrorServices,
     isMongoId: (id: string) => boolean
 ) {
@@ -19,7 +19,7 @@ export function listMyPostsFactory(
         }
 
         return await postDataSource.findAllWithFilter({
-            "author.authorId": userId,
+            author: userId,
         });
     };
 }

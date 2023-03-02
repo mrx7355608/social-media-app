@@ -1,9 +1,8 @@
-import { IPostDBModel } from "@/core/entities/post.interfaces";
-import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
 import { IErrorServices } from "@/services/interfaces/errorServices.interface";
+import { IPostDataSource } from "@/core/interfaces/postDataSource.itnerface";
 
 export function removePostFactory(
-    postDataSource: IDataSource<IPostDBModel>,
+    postDataSource: IPostDataSource,
     errorServices: IErrorServices,
     isMongoId: (id: string) => boolean
 ) {
@@ -18,10 +17,10 @@ export function removePostFactory(
         }
 
         // Check if the user owns the post
-        if (postExists.author.authorId !== userId) {
+        if (postExists.author !== userId) {
             return errorServices.forbiddenError("You do not own this post");
         }
 
-        return await postDataSource.deleteData(postId);
+        return await postDataSource.deletePost(postId);
     };
 }

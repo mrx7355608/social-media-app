@@ -1,12 +1,10 @@
-import { IPostDBModel } from "@/core/entities/post.interfaces";
 import { IDataSource } from "@/core/interfaces/data-source-generic.interface";
+import { IPostDataSource } from "@/core/interfaces/postDataSource.itnerface";
 import { IUserDBModel } from "@/core/interfaces/user.interfaces";
-import { PostDataSource } from "@/data/post.data";
-import { IErrorServices } from "@/services/interfaces/errorServices.interface";
 
 export function listTimelineFactory(
     userDataSource: IDataSource<IUserDBModel>,
-    postDataSource: PostDataSource
+    postDataSource: IPostDataSource
 ) {
     return async function (userId: string, page: number) {
         const user = (await userDataSource.findById(userId)) as IUserDBModel;
