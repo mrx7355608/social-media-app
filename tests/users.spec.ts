@@ -1,7 +1,6 @@
 import "dotenv/config";
 import supertest from "supertest";
 import { app } from "@/frameworks/app";
-import appConfig from "@/config/index";
 import mongoose from "mongoose";
 
 const agent = supertest.agent(app);
