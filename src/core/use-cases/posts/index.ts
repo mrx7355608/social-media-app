@@ -1,4 +1,3 @@
-import { listAllPostsFactory } from "./listAllPosts";
 import { listOnePostFactory } from "./listOnePost";
 import { addPostFactory } from "./addPost";
 import { editPostFactory } from "./editPost";
@@ -19,7 +18,6 @@ const userDataSource = new UserDataSource();
 const errorServices = new ErrorServices();
 const isMongoId = validator.isMongoId;
 
-const listAllPosts = listAllPostsFactory(postDataSource);
 const listOnePost = listOnePostFactory(
     postDataSource,
     errorServices,
@@ -48,7 +46,6 @@ const removeComment = removeCommentFromPostFactory(
 );
 
 export const postServices = {
-    listAllPosts,
     listOnePost,
     addPost,
     editPost,
