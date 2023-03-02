@@ -145,14 +145,23 @@ describe("Testing User Routes", function () {
                 .expect(400);
             expect(response.body.error).toBe("Comment text is missing");
         });
-        it.skip("add comment", async function () {
+        it.skip("add comment and returns newly created comment", async function () {
             const postId = "640016d1081267265ac5ffb3";
             const response = await agent
                 .patch(`/api/v1/posts/comment/${postId}`)
                 .send({
                     comment: "this is a comment",
-                });
-            expect(response.body.message).toBe("Comment added on post!");
+                })
+                .expect(200);
+
+            console.log(response.body);
+            expect(response.body).toEqual({
+                author: expect.any(Object),
+                _id: expect.any(String),
+                text: expect.any(String),
+                createdAt: expect.any(String),
+                updatedAt: expect.any(String),
+            });
         });
     });
     describe("Like post", function () {

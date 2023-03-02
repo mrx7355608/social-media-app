@@ -39,9 +39,12 @@ export function commentOnPostFactory(
         validPost.addComment(newComment._id);
 
         // update
-        return await postDataSource.update(postId, {
+        await postDataSource.update(postId, {
             comments: validPost.comments,
             updatedAt: new Date(),
         });
+
+        // Return newly created comment
+        return newComment;
     };
 }

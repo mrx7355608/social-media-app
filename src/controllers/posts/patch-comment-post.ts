@@ -1,4 +1,7 @@
-import { IComment } from "@/core/interfaces/comment.interfaces";
+import {
+    IComment,
+    ICommentDBModel,
+} from "@/core/interfaces/comment.interfaces";
 import { IPostDBModel } from "@/core/interfaces/post.interfaces";
 import { IHttpRequest } from "../interfaces/httpRequest.interface";
 
@@ -6,7 +9,7 @@ export function patchCommentController(
     commentPost: (
         postId: string,
         commentData: IComment
-    ) => Promise<IPostDBModel>
+    ) => Promise<ICommentDBModel>
 ) {
     return async function (httpRequest: IHttpRequest) {
         try {
@@ -33,10 +36,23 @@ export function patchCommentController(
                 updatedAt: new Date(),
             };
 
-            await commentPost(postId, commentData);
+            const comment = await commentPost(postId, commentData);
+            const populatedComment = await comment.populate(
+                "author",
+                "firstname lastname profilePicture"
+            );
+
+            const response = {
+                _id: comment._id,
+                text: comment.text,
+                author: populatedComment.author,
+                createdAt: new Date(comment.createdAt).toDateString(),
+                updatedAt: new Date(comment.updatedAt).toDateString(),
+            };
+
             return {
                 statusCode: 200,
-                body: { message: "Comment added on post!" },
+                body: response,
             };
         } catch (err: any) {
             return {
