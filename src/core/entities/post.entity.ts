@@ -1,11 +1,11 @@
-import { IPost } from "./post.interfaces";
+import { IPost } from "../interfaces/post.interfaces";
 
 export class PostFactory {
     constructor(private sanitize: (str: string) => string) {
         this.sanitize = sanitize;
     }
 
-    create(postData: IPost): IPost {
+    create(postData: IPost) {
         const { body, author, likes, comments, createdAt, updatedAt } =
             postData;
 
@@ -27,9 +27,6 @@ export class PostFactory {
         }
         if (!comments) {
             throw new Error("Post comments are missing");
-        }
-        if (!comments.every((elem) => typeof elem === "string")) {
-            throw new Error("Post comments contain one or more invalid values");
         }
 
         const sanitizedBody = this.sanitize(body);

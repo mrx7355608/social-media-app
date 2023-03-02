@@ -1,4 +1,4 @@
-import { IPostDBModel } from "@/core/entities/post.interfaces";
+import { IPostDBModel } from "@/core/interfaces/post.interfaces";
 import { IHttpRequest } from "../interfaces/httpRequest.interface";
 
 export function deletePostController(

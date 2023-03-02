@@ -1,4 +1,4 @@
-import { IPostDBModel } from "@/core/entities/post.interfaces";
+import { IPostDBModel } from "@/core/interfaces/post.interfaces";
 import { IHttpRequest } from "../interfaces/httpRequest.interface";
 
 export function patchPostController(
@@ -28,9 +28,26 @@ export function patchPostController(
             }
 
             const post = await editPost(postId, userId, changes);
+            const populated = await post.populate([
+                {
+                    path: "author",
+                    select: "firstname lastname profilePicture",
+                },
+                {
+                    path: "comments",
+                },
+            ]);
+
+            const response = {
+                _id: post._id,
+                author: populated.author,
+                body: post.body,
+                createdAt: new Date(post.createdAt).toDateString(),
+                updatedAt: new Date(post.updatedAt).toDateString(),
+            };
             return {
                 statusCode: 200,
-                body: post,
+                body: response,
             };
         } catch (err: any) {
             return {

@@ -1,4 +1,4 @@
-import { IPost } from "@/core/entities/post.interfaces";
+import { IPost } from "@/core/interfaces/post.interfaces";
 import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema({
