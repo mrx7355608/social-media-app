@@ -1,10 +1,13 @@
-import { IComment } from "@/core/entities/comment.interfaces";
+import { IComment } from "@/core/interfaces/comment.interfaces";
 import mongoose from "mongoose";
-import { authorSchema } from "./author.model";
 
 const commentSchema = new mongoose.Schema(
     {
-        author: authorSchema,
+        author: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: "User",
+        },
         text: {
             type: String,
             required: true,
