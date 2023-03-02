@@ -23,7 +23,7 @@ export function updateProfilePictureFactory(
             lastname: user.lastname,
             email: user.email,
             password: user.password,
-            confirmPassword: user.confirmPassword,
+            confirmPassword: user.password,
             pendingRequests: user.pendingRequests,
             friends: user.friends,
             profilePicture: user.profilePicture,
